@@ -1,27 +1,32 @@
-import { createServer } from 'http'
 import { parse } from 'url'
+import * as match from 'micro-route/match'
 import * as next from 'next'
+import { getConnection, findIssues } from 'curated-domain'
 
-const port = parseInt(process.env.PORT, 10) || 3000
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
 
-app.prepare().then(() => {
-  createServer((req, res) => {
-    const parsedUrl = parse(req.url, true)
-    const { pathname, query } = parsedUrl
+const route = {
+  search: '/search',
+}
 
-    if (pathname === '/search') {
-      app.render(req, res, '/search', query)
-    } else {
-      handle(req, res, parsedUrl)
-    }
-  }).listen(port, err => {
-    if (err) {
-      throw err
-    }
-    // tslint:disable-next-line no-console
-    console.log(`> Ready on http://localhost:${port}`)
-  })
-})
+async function main(req, res) {
+  const url = parse(req.url, true)
+  const { query } = url
+
+  if (match(req, route.search)) {
+    const result = await findIssues(query)
+    return app.render(req, res, route.search, result)
+  }
+
+  return handle(req, res, url)
+}
+
+async function setup(handler) {
+  await app.prepare()
+  await getConnection()
+  return handler
+}
+
+module.exports = setup(main)
