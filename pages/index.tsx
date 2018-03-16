@@ -6,5 +6,10 @@ export default () => (
     <Link href="/search" as="/search">
       <a>Search</a>
     </Link>
+    <style jsx>{`
+      a {
+        color: black;
+      }
+    `}</style>
   </nav>
 )
