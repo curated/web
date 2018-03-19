@@ -1,0 +1,30 @@
+@import '../styles/variables.scss';
+
+$padding: 20px;
+$paddingDelta: $headerSize - $padding * 2;
+
+.scroll {
+  position: fixed;
+  overflow: auto;
+  transition: $easeOut;
+  height: calc(100% - #{$headerSize});
+  top: $headerSize;
+
+  @media (max-width: 799px) {
+    &.nav-visible {
+      opacity: .75;
+    }
+  }
+
+  @media (min-width: 800px) {
+    &.nav-visible {
+      margin-left: $navSize;
+    }
+  }
+}
+
+.content {
+  background: $contentBackground;
+  min-height: calc(100% - #{$headerSize} - #{$footerSize} + #{$paddingDelta});
+  padding: $padding;
+}

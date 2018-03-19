@@ -1,15 +1,9 @@
-import React from 'react'
-import Link from 'next/link'
+import Layout from '../components/layout'
+import Card from '../components/card'
 
 export default () => (
-  <nav>
-    <Link href="/search" as="/search">
-      <a>Search</a>
-    </Link>
-    <style jsx>{`
-      a {
-        color: black;
-      }
-    `}</style>
-  </nav>
+  <Layout>
+    <h1>Curated GitHub Issues</h1>
+    <Card />
+  </Layout>
 )
