@@ -1,9 +1,9 @@
 import Layout from '../components/layout'
-import Card from '../components/card'
+import IssueCard from '../components/issue-card'
 
 export default () => (
   <Layout>
     <h1>Curated GitHub Issues</h1>
-    <Card />
+    <IssueCard />
   </Layout>
 )

@@ -1,25 +1,21 @@
 @import '../styles/variables.scss';
 
-$padding: 20px;
+$padding: 10px;
 $paddingDelta: $headerSize - $padding * 2;
+
+$paddingLg: 20px;
+$paddingDeltaLg: $headerSize - $paddingLg * 2;
 
 .scroll {
   position: fixed;
   overflow: auto;
   transition: $easeOut;
-  height: calc(100% - #{$headerSize});
   top: $headerSize;
+  height: calc(100% - #{$headerSize});
+  width: 100%;
 
-  @media (max-width: 799px) {
-    &.nav-visible {
-      opacity: .75;
-    }
-  }
-
-  @media (min-width: 800px) {
-    &.nav-visible {
-      margin-left: $navSize;
-    }
+  &.nav-visible {
+    opacity: .75;
   }
 }
 
@@ -27,4 +23,19 @@ $paddingDelta: $headerSize - $padding * 2;
   background: $contentBackground;
   min-height: calc(100% - #{$headerSize} - #{$footerSize} + #{$paddingDelta});
   padding: $padding;
+}
+
+@media (min-width: 800px) {
+  .content {
+    min-height: calc(100% - #{$headerSize} - #{$footerSize} + #{$paddingDeltaLg});
+    padding: $paddingLg;
+  }
+
+  .scroll {
+    &.nav-visible {
+      opacity: 1;
+      margin-left: $navSize;
+      width: calc(100% - #{$navSize});
+    }
+  }
 }

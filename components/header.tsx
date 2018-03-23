@@ -1,6 +1,6 @@
 import './header.scss'
 
-const github = require('../static/github.svg')
+const github = require('../static/logo/github.svg')
 
 export default ({ toggleNav }) => (
   <header className="header">

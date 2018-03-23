@@ -12,7 +12,7 @@ const favicon = require('../static/favicon.ico')
 export default class Layout extends React.Component<Props, State> {
   public constructor(props) {
     super(props)
-    this.state = { nav: true }
+    this.state = { nav: false }
   }
 
   public render() {

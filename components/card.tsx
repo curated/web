@@ -1,13 +1,17 @@
 import './card.scss'
 
-export default () => (
-  <article className="card">
-    Pellentesque habitant morbi tristique senectus et netus et malesuada fames
-    ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget,
-    tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean
-    ultricies mi vitae est. Pellentesque habitant morbi tristique senectus et
-    netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat
-    vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam
-    egestas semper. Aenean ultricies mi vitae est.
-  </article>
+export default ({ children, className = '' }) => (
+  <article className={`card ${className}`}>{children}</article>
+)
+
+export const CardHeader = ({ children, className = '' }) => (
+  <header className={`card-header ${className}`}>{children}</header>
+)
+
+export const CardBody = ({ children, className = '' }) => (
+  <section className={`card-body ${className}`}>{children}</section>
+)
+
+export const CardFooter = ({ children, className = '' }) => (
+  <footer className={`card-footer ${className}`}>{children}</footer>
 )

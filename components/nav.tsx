@@ -3,7 +3,7 @@ import './nav.scss'
 export default ({ visible }) => (
   <nav className={`nav ${visible ? '' : 'hidden'}`}>
     <section className="nav-container">
-      <h3>Sort by</h3>
+      <h2>Sort by</h2>
     </section>
   </nav>
 )
