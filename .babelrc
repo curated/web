@@ -1,0 +1,9 @@
+{
+  "presets": ["env", "react"],
+  "plugins": [
+    "transform-decorators-legacy",
+    "transform-class-properties",
+    "mobx-async-action",
+    "mobx-deep-action"
+  ]
+}

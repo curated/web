@@ -1,0 +1,41 @@
+@import '../variables.scss';
+
+.top-nav {
+  background: $dark;
+  border-bottom: 3px solid $mid;
+  display: flex;
+
+  .top-nav-right {
+    margin-left: auto;
+  }
+
+  a {
+    align-items: center;
+    color: $light;
+    display: inline-flex;
+    height: 60px;
+    outline: none;
+    padding: 0 20px;
+    position: relative;
+    transition: $easeout;
+
+    &:hover {
+      background: lighten($dark, 5%);
+    }
+
+    &:after {
+      transition: $easeout;
+    }
+
+    &:focus:after {
+      content: '';
+      background: $blue;
+      bottom: -3px;
+      height: 3px;
+      left: 0;
+      position: absolute;
+      width: 100%;
+      z-index: 1;
+    }
+  }
+}
