@@ -21,7 +21,6 @@ h3,
 h4,
 h5,
 h6 {
-  color: $dark;
   font-weight: normal;
   margin: 0;
 }
@@ -76,6 +75,7 @@ input {
 
   &:-webkit-autofill {
     -webkit-box-shadow: 0 0 0 2.5em white inset;
+    box-shadow: 0 0 0 2.5em white inset;
   }
 }
 

@@ -1,6 +1,6 @@
 import React from 'react'
-import logo from '../assets/logo.svg'
-import github from '../assets/github.svg'
+import {Logo} from '../assets/logo'
+import {GitHub} from '../assets/github'
 import './TopNav.scss'
 
 class TopNav extends React.Component {
@@ -8,7 +8,7 @@ class TopNav extends React.Component {
     return (
       <nav className="top-nav">
         <a href="/#" onClick={e => this.toggle(e)}>
-          <img src={logo} />
+          <Logo />
         </a>
 
         <div className="top-nav-right">
@@ -16,7 +16,7 @@ class TopNav extends React.Component {
             href="https://github.com/curated"
             rel="noopener noreferrer"
             target="_blank">
-            <img src={github} />
+            <GitHub />
           </a>
         </div>
       </nav>
