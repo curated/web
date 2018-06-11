@@ -1,0 +1,67 @@
+@import '../variables.scss';
+
+html,
+body,
+#root,
+.app,
+.issue-container {
+  height: 100%;
+}
+
+.issue-container {
+  .issue-search,
+  .issue-list {
+    height: calc(100% - 62px);
+    position: fixed;
+    overflow: auto;
+    transition: $easeout;
+  }
+}
+
+@media only screen and (max-width: 1199px) {
+  .issue-container {
+    .issue-search {
+      left: -600px;
+      width: 600px;
+      z-index: 1;
+    }
+
+    .issue-list {
+      width: 100%;
+    }
+
+    &.nav-visible {
+      .issue-search {
+        left: 0px;
+      }
+
+      .issue-list {
+        opacity: 0.25;
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .issue-container {
+    .issue-search {
+      left: -400px;
+      width: 400px;
+    }
+
+    .issue-list {
+      width: 100%;
+      right: 0;
+    }
+
+    &.nav-visible {
+      .issue-search {
+        left: 0;
+      }
+
+      .issue-list {
+        width: calc(100% - 400px);
+      }
+    }
+  }
+}

@@ -4,6 +4,8 @@
   background: $light;
   border-bottom: 2px solid darken($light, 5%);
   display: flex;
+  position: fixed;
+  width: 100%;
 
   .top-nav-right {
     margin-left: auto;

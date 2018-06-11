@@ -1,4 +1,5 @@
 import React from 'react'
+import {issueContainerStore} from '../issue/IssueContainerStore'
 import {Logo} from '../assets/logo'
 import {GitHub} from '../assets/github'
 import './TopNav.scss'
@@ -25,6 +26,7 @@ class TopNav extends React.Component {
 
   toggle(e) {
     e.preventDefault()
+    issueContainerStore.toggleNav()
   }
 }
 

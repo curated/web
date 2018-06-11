@@ -1,8 +1,8 @@
 import React from 'react'
 import {configure} from 'mobx'
-import {Route, Switch} from 'react-router-dom'
+import {Redirect, Route, Switch} from 'react-router-dom'
 import {TopNav} from './TopNav'
-import {Issues} from '../issues/Issues'
+import {IssueContainer} from '../issue/IssueContainer'
 import './App.scss'
 
 configure({
@@ -16,13 +16,11 @@ const App = () => (
     <TopNav />
     <main>
       <Switch>
-        <Route exact path="/" component={Issues} />
-        <Route component={NotFound} />
+        <Route exact path="/" component={IssueContainer} />
+        <Route component={() => <Redirect to="/" />} />
       </Switch>
     </main>
   </div>
 )
-
-const NotFound = () => <h1>Not Found</h1>
 
 export {App}

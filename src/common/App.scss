@@ -1,18 +1,13 @@
 @import '../variables.scss';
 
-html,
-body,
-#root {
-  height: 100%;
-}
-
 body {
   color: $dark;
   font-family: 'Roboto', sans-serif;
+  overflow: hidden;
 }
 
 main {
-  padding: 20px;
+  padding-top: 62px;
 }
 
 h1,
