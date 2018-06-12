@@ -2,7 +2,7 @@
 
 .top-nav {
   background: $light;
-  border-bottom: 2px solid darken($light, 5%);
+  border-bottom: 1px solid darken($light, 5%);
   display: flex;
   position: fixed;
   width: 100%;
@@ -32,8 +32,8 @@
     &:focus:after {
       content: '';
       background: $blue;
-      bottom: -2px;
-      height: 2px;
+      bottom: -1px;
+      height: 1px;
       left: 0;
       position: absolute;
       width: 100%;

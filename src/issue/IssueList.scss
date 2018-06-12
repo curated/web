@@ -1,5 +1,6 @@
 @import '../variables.scss';
 
 .issue-list {
+  background: lighten($light, 5%);
   padding: 20px;
 }

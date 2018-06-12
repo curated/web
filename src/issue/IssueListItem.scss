@@ -1,0 +1,82 @@
+@import '../variables.scss';
+
+.issue-list-item {
+  margin-bottom: 20px;
+
+  .issue-box {
+    background: white;
+    border: 1px solid $light;
+    border-bottom: none;
+    border-radius: 2px;
+    box-shadow: $boxshadow;
+    margin-top: 3px;
+
+    .issue-row {
+      display: flex;
+      padding: 15px;
+
+      .issue-state {
+        padding-right: 10px;
+      }
+
+      .issue-details {
+        .issue-title {
+          color: $dark;
+          display: block;
+          margin-bottom: 3px;
+          padding: 2px 0;
+        }
+      }
+    }
+
+    .issue-reactions {
+      border-top: 1px solid $light;
+      display: flex;
+
+      .issue-reaction {
+        align-items: center;
+        display: flex;
+        padding: 10px 15px;
+
+        .issue-reaction-count {
+          color: $mid;
+          font-size: 0.8rem;
+        }
+
+        svg {
+          filter: grayscale(30%);
+          height: 24px;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 749px) {
+  .issue-list-item {
+    .issue-reactions {
+      .issue-reaction {
+        flex-direction: column-reverse;
+        flex-grow: 1;
+
+        .issue-reaction-count {
+          margin-top: 5px;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 750px) {
+  .issue-list-item {
+    .issue-reactions {
+      .issue-reaction {
+        flex-direction: row-reverse;
+
+        .issue-reaction-count {
+          margin-left: 5px;
+        }
+      }
+    }
+  }
+}

@@ -1,4 +1,5 @@
 import React from 'react'
+import {IssueListItem} from './IssueListItem'
 import './IssueList.scss'
 
 class IssueList extends React.Component {
@@ -6,6 +7,10 @@ class IssueList extends React.Component {
     return (
       <article className="issue-list">
         <h1>Issues</h1>
+        <IssueListItem />
+        <IssueListItem />
+        <IssueListItem />
+        <IssueListItem />
       </article>
     )
   }

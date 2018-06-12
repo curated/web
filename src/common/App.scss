@@ -7,7 +7,7 @@ body {
 }
 
 main {
-  padding-top: 62px;
+  padding-top: 61px;
 }
 
 h1,
@@ -36,6 +36,7 @@ h3 {
 }
 
 a {
+  color: $blue;
   text-decoration: none;
 }
 
@@ -53,7 +54,7 @@ label {
 
 input {
   border: none;
-  border-bottom: 2px solid $mid;
+  border-bottom: 1px solid $mid;
   border-radius: 0;
   min-width: 200px;
   outline: none;
@@ -74,34 +75,9 @@ input {
   }
 }
 
-select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAG0lEQVR42mNgwAfKy8v/48I4FeA0AacVDFQBAP9wJkE/KhUMAAAAAElFTkSuQmCC');
-  background-repeat: no-repeat;
-  background-position: right 5px center;
-  border: none;
-  border-bottom: 2px solid $mid;
-  border-radius: 0;
-  min-width: 200px;
-  outline: none;
-  padding: 5px 25px 5px 5px;
-  transition: $easeout;
-
-  &:hover {
-    border-bottom-color: $dark;
-    cursor: pointer;
-  }
-
-  &:focus {
-    border-bottom-color: $blue;
-  }
-}
-
 button {
   background: $dark;
-  border: 3px solid $dark;
+  border: 1px solid $dark;
   border-radius: 2px;
   color: $light;
   font-weight: 300;
@@ -120,6 +96,14 @@ button {
   }
 }
 
+.color-mid {
+  color: $mid;
+}
+
+.color-red {
+  color: $red;
+}
+
 .hidden {
   display: none;
 }
@@ -128,6 +112,6 @@ button {
   text-align: right;
 }
 
-.error {
-  color: $red;
+.text-small {
+  font-size: 0.8rem;
 }
