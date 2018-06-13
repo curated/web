@@ -37,7 +37,12 @@ h3 {
 
 a {
   color: $blue;
+  outline: none;
   text-decoration: none;
+
+  &:focus {
+    text-decoration: underline;
+  }
 }
 
 label {
