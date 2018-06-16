@@ -3,6 +3,7 @@ import {configure} from 'mobx'
 import {Redirect, Route, Switch} from 'react-router-dom'
 import {TopNav} from './TopNav'
 import {IssueContainer} from '../issue/IssueContainer'
+import 'babel-polyfill'
 import './App.scss'
 
 configure({

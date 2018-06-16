@@ -1,6 +1,18 @@
+import moment from 'moment'
+
 class Fmt {
-  num(s) {
-    return s
+  datetime(d) {
+    return moment(d).format('LLLL')
+  }
+
+  number(s) {
+    if (typeof s === 'number' || typeof s === 'string') {
+      return s.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    }
+  }
+
+  timeAgo(d) {
+    return moment(d).fromNow()
   }
 }
 

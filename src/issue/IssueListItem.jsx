@@ -1,6 +1,9 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import {fmt} from '../common/Fmt'
+import {issueStore} from './IssueStore'
 import {Open} from '../assets/issue/Open'
-// import {Closed} from '../assets/issue/Closed'
+import {Closed} from '../assets/issue/Closed'
 import {ThumbsUp} from '../assets/emoji/ThumbsUp'
 import {ThumbsDown} from '../assets/emoji/ThumbsDown'
 import {Laugh} from '../assets/emoji/Laugh'
@@ -11,59 +14,120 @@ import './IssueListItem.scss'
 
 class IssueListItem extends React.Component {
   render() {
+    const {issue} = this.props
+
     return (
       <section className="issue-list-item">
         <a className="text-small" href="/#">
-          Microsoft
+          {issue.repoOwnerLogin}
         </a>
+
         <span className="color-mid text-small"> / </span>
+
         <a className="text-small" href="/#">
-          vscode
+          {issue.repoName}
         </a>
+
+        <span className="text-small">
+          {` ${fmt.number(issue.repoForks)}`} forks
+          {` ${fmt.number(issue.repoStargazers)}`} stars
+        </span>
+
         <div className="issue-box">
           <div className="issue-row">
             <div className="issue-state">
-              <Open />
+              {issue.state === 'OPEN' ? <Open /> : <Closed />}
             </div>
+
             <div className="issue-details">
               <a className="issue-title" href="/#">
-                Perhaps there will be an issue with an average title size
+                {issue.title}
               </a>
-              <a className="text-small" href="/#">
-                #910
-              </a>
+
               <span className="color-mid text-small">
-                {' '}
-                opened 17 minutes ago by{' '}
+                <a href="/#">#{issue.number}</a>
+                {' by '}
+                <a href="/#">{issue.authorLogin}</a>
+                <span className="separator"> | </span>
+                <span
+                  className={`${
+                    issueStore.sortBy === 'createdAt' ? 'active' : ''
+                  }`}
+                  title={fmt.datetime(issue.createdAt)}>
+                  {' opened '}
+                  {fmt.timeAgo(issue.createdAt)}
+                </span>
+                <span className="separator"> | </span>
+                <span
+                  className={`${
+                    issueStore.sortBy === 'updatedAt' ? 'active' : ''
+                  }`}
+                  title={fmt.datetime(issue.updatedAt)}>
+                  {' updated '}
+                  {fmt.timeAgo(issue.updatedAt)}
+                </span>
               </span>
-              <a className="text-small" href="/#">
-                ntucker
-              </a>
             </div>
           </div>
+
           <div className="issue-reactions">
-            <div className="issue-reaction">
-              <div className="issue-reaction-count">1321</div>
+            <div
+              className={`issue-reaction ${
+                issueStore.sortBy === 'thumbsUp' ? 'active' : ''
+              }`}>
+              <div className="issue-reaction-count">
+                {fmt.number(issue.thumbsUp)}
+              </div>
               <ThumbsUp />
             </div>
-            <div className="issue-reaction">
-              <div className="issue-reaction-count">231</div>
+
+            <div
+              className={`issue-reaction ${
+                issueStore.sortBy === 'thumbsDown' ? 'active' : ''
+              }`}>
+              <div className="issue-reaction-count">
+                {fmt.number(issue.thumbsDown)}
+              </div>
               <ThumbsDown />
             </div>
-            <div className="issue-reaction">
-              <div className="issue-reaction-count">332</div>
+
+            <div
+              className={`issue-reaction ${
+                issueStore.sortBy === 'laugh' ? 'active' : ''
+              }`}>
+              <div className="issue-reaction-count">
+                {fmt.number(issue.laugh)}
+              </div>
               <Laugh />
             </div>
-            <div className="issue-reaction">
-              <div className="issue-reaction-count">131</div>
+
+            <div
+              className={`issue-reaction ${
+                issueStore.sortBy === 'hooray' ? 'active' : ''
+              }`}>
+              <div className="issue-reaction-count">
+                {fmt.number(issue.hooray)}
+              </div>
               <Hooray />
             </div>
-            <div className="issue-reaction">
-              <div className="issue-reaction-count">212</div>
+
+            <div
+              className={`issue-reaction ${
+                issueStore.sortBy === 'confused' ? 'active' : ''
+              }`}>
+              <div className="issue-reaction-count">
+                {fmt.number(issue.confused)}
+              </div>
               <Confused />
             </div>
-            <div className="issue-reaction">
-              <div className="issue-reaction-count">213</div>
+
+            <div
+              className={`issue-reaction ${
+                issueStore.sortBy === 'heart' ? 'active' : ''
+              }`}>
+              <div className="issue-reaction-count">
+                {fmt.number(issue.heart)}
+              </div>
               <Heart />
             </div>
           </div>
@@ -71,6 +135,10 @@ class IssueListItem extends React.Component {
       </section>
     )
   }
+}
+
+IssueListItem.propTypes = {
+  issue: PropTypes.object.isRequired,
 }
 
 export {IssueListItem}

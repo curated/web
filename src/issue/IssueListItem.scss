@@ -26,6 +26,15 @@
           margin-bottom: 5px;
           padding: 2px 0;
         }
+
+        .active {
+          color: $dark;
+          font-weight: bold;
+        }
+
+        .separator {
+          margin: 0 5px;
+        }
       }
     }
 
@@ -38,14 +47,24 @@
         display: flex;
         padding: 10px 15px;
 
-        .issue-reaction-count {
-          color: $mid;
-          font-size: 0.8rem;
+        &.active {
+          svg {
+            filter: none;
+          }
+          .issue-reaction-count {
+            color: $dark;
+            font-weight: bold;
+          }
         }
 
         svg {
-          filter: grayscale(30%);
+          filter: grayscale(75%);
           height: 24px;
+        }
+
+        .issue-reaction-count {
+          color: $mid;
+          font-size: 0.8rem;
         }
       }
     }
