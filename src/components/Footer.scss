@@ -1,0 +1,47 @@
+@import '../variables.scss';
+
+.footer {
+  background: $dark;
+  bottom: 0;
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+
+  .container {
+    display: flex;
+  }
+
+  a {
+    align-items: center;
+    display: inline-flex;
+    filter: grayscale(100%);
+    flex-grow: 1;
+    height: 50px;
+    justify-content: center;
+
+    svg {
+      fill: $light;
+      height: 24px;
+    }
+
+    &:hover,
+    &:focus {
+      filter: none;
+    }
+  }
+}
+
+// @media only screen and (min-width: 1200px) {
+//   .footer {
+//     background: $dark;
+//     width: 50px;
+//     height: 400px;
+//     top: 62px;
+//     left: calc(50% - 450px);
+
+//     .container {
+//       flex-direction: column;
+//       width: 50px;
+//     }
+//   }
+// }

@@ -1,82 +1,94 @@
 @import '../variables.scss';
 
+$size: 100px;
+$pos: calc(50% - 50px);
+
 .loading {
-  width: 38px;
-  height: 38px;
+  position: absolute;
+  width: $size;
+  height: $size;
+  top: $pos;
+  left: $pos;
 
-  -webkit-animation: rotate 2s linear infinite;
-  -moz-animation: rotate 2s linear infinite;
-  -ms-animation: rotate 2s linear infinite;
-  animation: rotate 2s linear infinite;
+  svg {
+    width: $size;
+    height: $size;
 
-  -webkit-transform-origin: center center;
-  -moz-transform-origin: center center;
-  -ms-transform-origin: center center;
-  transform-origin: center center;
+    -webkit-animation: rotate 2s linear infinite;
+    -moz-animation: rotate 2s linear infinite;
+    -ms-animation: rotate 2s linear infinite;
+    animation: rotate 2s linear infinite;
 
-  circle {
-    stroke: $blue;
-    stroke-dasharray: 150, 200;
-    stroke-dashoffset: -10;
-    stroke-linecap: round;
+    -webkit-transform-origin: center center;
+    -moz-transform-origin: center center;
+    -ms-transform-origin: center center;
+    transform-origin: center center;
 
-    -webkit-animation: dash 1.5s ease-in-out infinite,
-      color 6s ease-in-out infinite;
-    -moz-animation: dash 1.5s ease-in-out infinite,
-      color 6s ease-in-out infinite;
-    -ms-animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
-    animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
-  }
+    circle {
+      stroke: $mid;
+      stroke-dasharray: 150, 200;
+      stroke-dashoffset: -10;
+      stroke-linecap: round;
 
-  @-webkit-keyframes rotate {
-    100% {
-      -webkit-transform: rotate(360deg);
-      -moz-transform: rotate(360deg);
-      -ms-transform: rotate(360deg);
-      transform: rotate(360deg);
-    }
-  }
-
-  @keyframes rotate {
-    100% {
-      -webkit-transform: rotate(360deg);
-      -moz-transform: rotate(360deg);
-      -ms-transform: rotate(360deg);
-      transform: rotate(360deg);
-    }
-  }
-
-  @-webkit-keyframes dash {
-    0% {
-      stroke-dasharray: 1, 200;
-      stroke-dashoffset: 0;
+      -webkit-animation: dash 1.5s ease-in-out infinite,
+        color 6s ease-in-out infinite;
+      -moz-animation: dash 1.5s ease-in-out infinite,
+        color 6s ease-in-out infinite;
+      -ms-animation: dash 1.5s ease-in-out infinite,
+        color 6s ease-in-out infinite;
+      animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
     }
 
-    50% {
-      stroke-dasharray: 89, 200;
-      stroke-dashoffset: -35;
+    @-webkit-keyframes rotate {
+      100% {
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
     }
 
-    100% {
-      stroke-dasharray: 89, 200;
-      stroke-dashoffset: -124;
-    }
-  }
-
-  @keyframes dash {
-    0% {
-      stroke-dasharray: 1, 200;
-      stroke-dashoffset: 0;
+    @keyframes rotate {
+      100% {
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
     }
 
-    50% {
-      stroke-dasharray: 89, 200;
-      stroke-dashoffset: -35;
+    @-webkit-keyframes dash {
+      0% {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+      }
+
+      50% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -35;
+      }
+
+      100% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -124;
+      }
     }
 
-    100% {
-      stroke-dasharray: 89, 200;
-      stroke-dashoffset: -124;
+    @keyframes dash {
+      0% {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+      }
+
+      50% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -35;
+      }
+
+      100% {
+        stroke-dasharray: 89, 200;
+        stroke-dashoffset: -124;
+      }
     }
   }
 }

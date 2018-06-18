@@ -1,0 +1,32 @@
+@import '../variables.scss';
+
+.header {
+  background: $dark;
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+
+  .container {
+    display: flex;
+  }
+
+  .search {
+    align-items: center;
+    display: inline-flex;
+    flex-grow: 1;
+    justify-content: center;
+  }
+
+  a {
+    align-items: center;
+    color: $mid;
+    display: inline-flex;
+    height: 50px;
+    padding: 0 $pad;
+
+    &:hover,
+    &:focus {
+      color: $light;
+    }
+  }
+}

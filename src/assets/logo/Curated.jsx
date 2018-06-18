@@ -1,10 +1,10 @@
 import React from 'react'
 
-const Logo = () => (
+const Curated = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="32"
-    height="32"
+    width="24"
+    height="24"
     aria-hidden="true"
     version="1.1"
     viewBox="0 0 1000 1000">
@@ -20,4 +20,4 @@ const Logo = () => (
   </svg>
 )
 
-export {Logo}
+export {Curated}

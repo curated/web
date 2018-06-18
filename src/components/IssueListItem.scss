@@ -1,0 +1,58 @@
+@import '../variables.scss';
+
+.issue-list-item {
+  background: white;
+  margin-bottom: $pad;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  .issue-title {
+    border-bottom: 1px solid $light;
+    padding: $pad;
+    word-wrap: break-word;
+
+    a {
+      color: $dark;
+    }
+  }
+
+  .issue-repo {
+    padding: $pad $pad 0;
+
+    svg {
+      margin-left: $pad;
+      vertical-align: sub;
+    }
+  }
+
+  .issue-meta {
+    padding: $pad;
+
+    svg {
+      vertical-align: sub;
+    }
+  }
+
+  .issue-reactions {
+    border-top: 1px solid $light;
+    display: flex;
+    padding: $pad;
+
+    .issue-reaction {
+      align-items: center;
+      display: flex;
+      // flex-direction: column;
+      flex-grow: 1;
+      justify-content: left;
+    }
+
+    svg {
+      filter: grayscale(100%);
+      margin-right: 5px;
+      vertical-align: sub;
+      height: 16px;
+    }
+  }
+}

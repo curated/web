@@ -9,6 +9,7 @@ class Fmt {
     if (typeof s === 'number' || typeof s === 'string') {
       return s.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     }
+    return s
   }
 
   timeAgo(d) {

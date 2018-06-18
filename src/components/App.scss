@@ -1,0 +1,77 @@
+@import '../variables.scss';
+
+body {
+  background: $light;
+  color: $dark;
+  font-family: 'Muli', sans-serif;
+}
+
+// .container {
+//   margin: 0 auto;
+//   max-width: 800px;
+// }
+
+main {
+  padding: 50px 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal;
+  margin: 0 0 10px;
+}
+
+a {
+  color: $blue;
+  outline: none;
+  text-decoration: none;
+  transition: $easeout;
+
+  &:focus {
+    text-decoration: underline;
+  }
+}
+
+input {
+  background: $light;
+  border: none;
+  border-radius: 0;
+  outline: none;
+  padding: 6px;
+  transition: $easeout;
+  width: 80%;
+
+  &:hover,
+  &:focus {
+    background: white;
+  }
+
+  &:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 2.5em white inset;
+    box-shadow: 0 0 0 2.5em white inset;
+  }
+}
+
+.color-mid {
+  color: $mid !important;
+}
+
+.color-red {
+  color: $red !important;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.text-right {
+  text-align: right !important;
+}
+
+.text-small {
+  font-size: 0.8rem !important;
+}

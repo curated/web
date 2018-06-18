@@ -2,7 +2,7 @@ import React from 'react'
 import {observer} from 'mobx-react'
 import {Loading} from '../assets/Loading'
 import {IssueListItem} from './IssueListItem'
-import {issueStore} from './IssueStore'
+import {issueStore} from '../core/IssueStore'
 import './IssueList.scss'
 
 @observer
@@ -12,12 +12,7 @@ class IssueList extends React.Component {
   }
 
   render() {
-    return (
-      <article className="issue-list">
-        <h1>Issues ({issueStore.total})</h1>
-        {this.renderIssues()}
-      </article>
-    )
+    return <article className="issue-list">{this.renderIssues()}</article>
   }
 
   renderIssues() {
