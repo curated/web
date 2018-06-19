@@ -6,11 +6,6 @@ body {
   font-family: 'Muli', sans-serif;
 }
 
-// .container {
-//   margin: 0 auto;
-//   max-width: 800px;
-// }
-
 main {
   padding: 55px 0;
 }
@@ -69,4 +64,11 @@ input {
 
 .text-small {
   font-size: 0.8rem !important;
+}
+
+@media only screen and (min-width: 1025px) {
+  .container {
+    margin: 0 auto;
+    max-width: 800px;
+  }
 }
