@@ -30,10 +30,6 @@ a {
   outline: none;
   text-decoration: none;
   transition: $easeout;
-
-  &:focus {
-    text-decoration: underline;
-  }
 }
 
 input {
@@ -45,7 +41,6 @@ input {
   transition: $easeout;
   width: 80%;
 
-  &:hover,
   &:focus {
     background: white;
   }

@@ -19,14 +19,8 @@
 
   a {
     align-items: center;
-    color: $mid;
     display: inline-flex;
     height: 50px;
     padding: 0 $pad;
-
-    &:hover,
-    &:focus {
-      color: $light;
-    }
   }
 }
