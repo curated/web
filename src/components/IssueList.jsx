@@ -21,7 +21,9 @@ class IssueList extends React.Component {
     }
 
     if (issueStore.error) {
-      return <div className="color-red">{issueStore.error}</div>
+      return (
+        <div className="color-red issue-list-error">{issueStore.error}</div>
+      )
     }
 
     return issueStore.issues.map(issue => (

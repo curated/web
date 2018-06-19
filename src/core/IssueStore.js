@@ -21,10 +21,12 @@ class IssueStore {
       const params = {sort: this.sortField, asc: false, from: 0}
       const res = await client.get('/issues', params)
       this.loading = false
+      this.error = null
       this.issues = res.issues
     } catch (e) {
       this.loading = false
-      this.error = e
+      this.error = e.toString()
+      this.issues = []
     }
   }
 }

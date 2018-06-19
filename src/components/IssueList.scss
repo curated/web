@@ -2,4 +2,8 @@
 
 .issue-list {
   padding: $pad 0;
+
+  .issue-list-error {
+    padding: 0 $pad;
+  }
 }

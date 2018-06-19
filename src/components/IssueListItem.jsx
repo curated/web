@@ -15,6 +15,15 @@ import {Star} from '../assets/repo/Star'
 import './IssueListItem.scss'
 
 class IssueListItem extends React.Component {
+  static iconMap = {
+    thumbsUp: <ThumbsUp />,
+    thumbsDown: <ThumbsDown />,
+    laugh: <Laugh />,
+    hooray: <Hooray />,
+    confused: <Confused />,
+    heart: <Heart />,
+  }
+
   render() {
     const {issue} = this.props
 
@@ -70,25 +79,38 @@ class IssueListItem extends React.Component {
   }
 
   renderReaction(issue) {
-    const iconMap = {
-      thumbsUp: <ThumbsUp />,
-      thumbsDown: <ThumbsDown />,
-      laugh: <Laugh />,
-      hooray: <Hooray />,
-      confused: <Confused />,
-      heart: <Heart />,
-    }
-
-    const icon = iconMap[issueStore.sortField]
+    const reaction = this.getReaction(issue)
 
     return (
       <div className="issue-reactions">
         <div className="issue-reaction">
-          {icon || <ThumbsUp />}
-          {fmt.number(icon ? issue[issueStore.sortField] : issue.thumbsUp)}
+          {reaction.icon}
+          {fmt.number(reaction.value)}
         </div>
       </div>
     )
+  }
+
+  getReaction(issue) {
+    let icon = IssueListItem.iconMap[issueStore.sortField]
+    if (icon) {
+      return {
+        icon,
+        value: issue[issueStore.sortField],
+      }
+    }
+    return this.getMaxReaction(issue)
+  }
+
+  getMaxReaction(issue) {
+    const max = {value: 0}
+    for (const reaction of Object.keys(IssueListItem.iconMap)) {
+      if (issue[reaction] > max.value) {
+        max.icon = IssueListItem.iconMap[reaction]
+        max.value = issue[reaction]
+      }
+    }
+    return max
   }
 }
 

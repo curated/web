@@ -49,10 +49,13 @@
     }
 
     svg {
-      filter: grayscale(100%);
       margin-right: 5px;
       vertical-align: sub;
       height: 16px;
+
+      g {
+        fill: $mid;
+      }
     }
   }
 }

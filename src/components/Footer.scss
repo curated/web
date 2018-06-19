@@ -14,20 +14,9 @@
   a {
     align-items: center;
     display: inline-flex;
-    filter: grayscale(100%);
     flex-grow: 1;
     height: 50px;
     justify-content: center;
-
-    svg {
-      fill: $light;
-      height: 24px;
-    }
-
-    &:hover,
-    &:focus {
-      filter: none;
-    }
   }
 }
 
