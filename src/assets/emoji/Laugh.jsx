@@ -5,6 +5,7 @@ const Laugh = () => (
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 18 18"
     version="1.1"
+    role="img"
     height="24px">
     <g transform="translate(-177.000000, -17.000000)" fill="#ECEFF1">
       <g transform="translate(177.000000, 17.000000)">

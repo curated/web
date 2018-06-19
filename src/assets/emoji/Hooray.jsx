@@ -5,6 +5,7 @@ const Hooray = () => (
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 20 19"
     version="1.1"
+    role="img"
     height="28px">
     <g transform="translate(-215.000000, -16.000000)" fill="#ECEFF1">
       <g transform="translate(215.000000, 16.000000)">
