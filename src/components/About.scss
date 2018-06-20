@@ -1,0 +1,53 @@
+@import '../variables.scss';
+
+.about {
+  background: $light;
+  border: 1px solid darken($light, 7%);
+  position: absolute;
+  transition: $quick;
+  top: 56px;
+  right: 0;
+  width: 250px;
+
+  &.collapsed {
+    opacity: 0;
+  }
+
+  .info {
+    color: $mid;
+    font-size: 0.8rem;
+    padding: 20px 15px;
+
+    p {
+      margin: 0 0 15px;
+    }
+
+    svg {
+      height: 16px;
+      margin: 0 5px;
+      vertical-align: sub;
+
+      g {
+        fill: $mid;
+      }
+    }
+  }
+
+  a {
+    border-top: 1px solid darken($light, 7%);
+    color: $dark;
+    display: block;
+    font-size: 0.8rem;
+    width: 100%;
+
+    svg {
+      margin-right: 10px;
+    }
+  }
+}
+
+@media only screen and (min-width: 1025px) {
+  .about {
+    right: calc(50% - 400px);
+  }
+}
