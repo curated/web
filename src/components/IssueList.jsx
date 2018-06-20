@@ -1,4 +1,5 @@
 import React from 'react'
+import InfiniteScroll from 'react-infinite-scroller'
 import {observer} from 'mobx-react'
 import {Loading} from '../assets/Loading'
 import {IssueListItem} from './IssueListItem'
@@ -8,7 +9,7 @@ import './IssueList.scss'
 @observer
 class IssueList extends React.Component {
   componentDidMount() {
-    issueStore.searchIssues()
+    issueStore.search()
   }
 
   render() {
@@ -16,19 +17,33 @@ class IssueList extends React.Component {
   }
 
   renderIssues() {
-    if (issueStore.loading) {
+    if (issueStore.issues.length === 0 && issueStore.loading) {
       return <Loading />
     }
 
     if (issueStore.error) {
       return (
-        <div className="color-red issue-list-error">{issueStore.error}</div>
+        <div className="issue-list-error color-red">{issueStore.error}</div>
       )
     }
 
-    return issueStore.issues.map(issue => (
-      <IssueListItem key={issue.id} issue={issue} />
-    ))
+    const loader = (
+      <div key={0} className="color-mid text-center text-small">
+        Loading more
+      </div>
+    )
+
+    return (
+      <InfiniteScroll
+        loadMore={() => issueStore.load()}
+        hasMore={issueStore.hasMore()}
+        loader={loader}
+        threshold={0}>
+        {issueStore.issues.map(issue => (
+          <IssueListItem key={issue.id} issue={issue} />
+        ))}
+      </InfiniteScroll>
+    )
   }
 }
 
