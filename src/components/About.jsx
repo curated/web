@@ -1,7 +1,6 @@
 import React from 'react'
 import {observer} from 'mobx-react'
 import {headerStore} from '../core/HeaderStore'
-import {Heart} from '../assets/emoji/Heart'
 import {Bonsai} from '../assets/logo/Bonsai'
 import {GraphQL} from '../assets/logo/GraphQL'
 import {GitHub} from '../assets/logo/GitHub'
@@ -14,11 +13,9 @@ class About extends React.Component {
     return (
       <div className={`about ${headerStore.about ? '' : 'collapsed'}`}>
         <div className="info">
-          <p>
-            Curated is an indexed dataset of popular GitHub comments ranked by
-            user reactions.
-          </p>
-          Open source hosting<Heart />thanks to
+          Curated is an indexed dataset of popular GitHub comments ranked by
+          user reactions. It&#39;s written in Golang and React and it&#39;s
+          available thanks to open source hosting by:
         </div>
 
         <a href="https://zeit.co" rel="noopener noreferrer" target="_blank">

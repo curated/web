@@ -3,14 +3,16 @@
 .about {
   background: $light;
   border: 1px solid darken($light, 7%);
+  border-top: none;
   position: absolute;
   transition: $quick;
-  top: 56px;
+  top: 50px;
   right: 0;
   width: 250px;
 
   &.collapsed {
     opacity: 0;
+    visibility: hidden;
   }
 
   .info {

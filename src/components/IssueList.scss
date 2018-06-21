@@ -3,7 +3,14 @@
 .issue-list {
   padding: $pad 0;
 
-  .issue-list-error {
+  .error {
+    color: $red;
     padding: 0 $pad;
+  }
+
+  .loading-more {
+    color: $mid;
+    font-size: 0.8rem;
+    text-align: center;
   }
 }

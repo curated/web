@@ -8,21 +8,37 @@
     margin-bottom: 0;
   }
 
+  &.expanded {
+    .issue-title {
+      a {
+        background: $dark;
+        color: $light;
+      }
+    }
+  }
+
   .issue-title {
     border-bottom: 1px solid $light;
-    padding: $pad;
     word-wrap: break-word;
 
     a {
       color: $dark;
+      display: block;
+      padding: $pad;
     }
+  }
+
+  .issue-body {
+    border-top: 1px solid $light;
+    padding: $pad;
+    word-wrap: break-word;
   }
 
   .issue-repo {
     padding: $pad $pad 0;
 
     svg {
-      margin-left: $pad;
+      margin-left: 5px;
       vertical-align: sub;
     }
   }
@@ -30,8 +46,21 @@
   .issue-meta {
     padding: $pad;
 
+    // .active {
+    //   font-weight: bold;
+    // }
+
     svg {
+      margin-right: 5px;
       vertical-align: sub;
+    }
+  }
+
+  .issue-repo,
+  .issue-meta {
+    a {
+      color: $dark;
+      pointer-events: none;
     }
   }
 
@@ -43,9 +72,12 @@
     .issue-reaction {
       align-items: center;
       display: flex;
-      // flex-direction: column;
       flex-grow: 1;
       justify-content: left;
+
+      // &.active {
+      //   font-weight: bold;
+      // }
     }
 
     svg {

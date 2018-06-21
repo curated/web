@@ -4,9 +4,15 @@
   background: darken($light, 3%);
   border-top: 1px solid darken($light, 7%);
   bottom: 0;
+  left: 0;
   position: fixed;
-  width: 100%;
+  transition: $quick;
+  width: 200%;
   z-index: 1;
+
+  &.next {
+    left: -100%;
+  }
 
   .container {
     display: flex;
@@ -18,10 +24,10 @@
     flex-grow: 1;
     height: 54px;
     justify-content: center;
-  }
 
-  &.active {
-    opacity: 0.5;
+    &.active {
+      opacity: 0.5;
+    }
   }
 }
 
@@ -30,11 +36,16 @@
     border: 1px solid darken($light, 7%);
     height: 433px;
     left: calc(50% - 467px);
-    top: 67px;
+    top: 62px;
+    transition: none;
     width: 55px;
 
     .container {
       flex-direction: column;
+    }
+
+    .footer-pagination {
+      display: none;
     }
   }
 }

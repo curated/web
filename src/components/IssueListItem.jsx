@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import {observer} from 'mobx-react'
 import {fmt} from '../core/Fmt'
 import {issueStore} from '../core/IssueStore'
 import {ThumbsUp} from '../assets/emoji/ThumbsUp'
@@ -14,6 +15,7 @@ import {Fork} from '../assets/repo/Fork'
 import {Star} from '../assets/repo/Star'
 import './IssueListItem.scss'
 
+@observer
 class IssueListItem extends React.Component {
   static iconMap = {
     thumbsUp: <ThumbsUp />,
@@ -28,14 +30,20 @@ class IssueListItem extends React.Component {
     const {issue} = this.props
 
     return (
-      <section className="issue-list-item">
+      <section
+        className={`issue-list-item ${issue.collapsed ? '' : 'expanded'}`}>
         <div className="issue-title">
-          <a href="/#">{issue.title}</a>
+          <a href="/#" onClick={e => this.toggleIssue(e, issue)}>
+            {issue.title}
+          </a>
         </div>
         <div className="color-mid text-small">
           {this.renderRepo(issue)}
           {this.renderMeta(issue)}
-          {this.renderReaction(issue)}
+          {this.renderReactions(issue)}
+        </div>
+        <div className={`issue-body ${issue.collapsed ? 'hidden' : ''}`}>
+          {issue.bodyText}
         </div>
       </section>
     )
@@ -44,17 +52,21 @@ class IssueListItem extends React.Component {
   renderRepo(issue) {
     return (
       <div className="issue-repo">
-        <a href="/#">{issue.repoOwnerLogin}</a>
+        <a href="/#" onClick={e => e.preventDefault()}>
+          {issue.repoOwnerLogin}
+        </a>
         {' / '}
-        <a href="/#">{issue.repoName}</a>
-        <Star /> {` ${fmt.number(issue.repoStargazers)}`}
-        <Fork /> {` ${fmt.number(issue.repoForks)}`}
+        <a href="/#" onClick={e => e.preventDefault()}>
+          {issue.repoName}
+        </a>
+        <Star /> {fmt.number(issue.repoStargazers)}
+        <Fork /> {fmt.number(issue.repoForks)}
       </div>
     )
   }
 
   renderMeta(issue) {
-    const timestamp = (field, label) => (
+    const format = (field, label) => (
       <span
         className={`${issueStore.sortField === field ? 'active' : ''}`}
         title={fmt.datetime(issue[field])}>
@@ -63,54 +75,87 @@ class IssueListItem extends React.Component {
       </span>
     )
 
-    const metatime =
+    const time =
       issueStore.sortField === 'updatedAt'
-        ? timestamp('updatedAt', 'updated')
-        : timestamp('createdAt', 'opened')
+        ? format('updatedAt', 'updated')
+        : format('createdAt', 'opened')
 
     return (
       <div className="issue-meta">
         {issue.state === 'OPEN' ? <Open /> : <Closed />}
+        <a href="/#" onClick={e => e.preventDefault()}>
+          #{issue.number}
+        </a>
         {' by '}
-        <a href="/#">{issue.authorLogin}</a>
-        {metatime}
+        <a href="/#" onClick={e => e.preventDefault()}>
+          {issue.authorLogin}
+        </a>
+        {time}
       </div>
     )
   }
 
-  renderReaction(issue) {
-    const reaction = this.getReaction(issue)
+  renderReactions(issue) {
+    if (issue.collapsed) {
+      return this.renderReactionElements([this.getRelevantReaction(issue)])
+    }
+    return this.renderReactionElements(this.getAllReactions(issue))
+  }
 
+  renderReactionElements(reactions) {
     return (
       <div className="issue-reactions">
-        <div className="issue-reaction">
-          {reaction.icon}
-          {fmt.number(reaction.value)}
-        </div>
+        {reactions.map(reaction => (
+          <div
+            key={reaction.key}
+            className={`issue-reaction ${
+              issueStore.sortField === reaction.key ? 'active' : ''
+            }`}>
+            {reaction.icon}
+            {fmt.number(reaction.value)}
+          </div>
+        ))}
       </div>
     )
   }
 
-  getReaction(issue) {
+  getAllReactions(issue) {
+    return Object.keys(IssueListItem.iconMap).map(key => {
+      return {
+        key,
+        value: issue[key],
+        icon: IssueListItem.iconMap[key],
+      }
+    })
+  }
+
+  getRelevantReaction(issue) {
     let icon = IssueListItem.iconMap[issueStore.sortField]
     if (icon) {
       return {
-        icon,
+        key: issueStore.sortField,
         value: issue[issueStore.sortField],
+        icon,
       }
     }
     return this.getMaxReaction(issue)
   }
 
   getMaxReaction(issue) {
-    const max = {value: 0}
-    for (const reaction of Object.keys(IssueListItem.iconMap)) {
-      if (issue[reaction] > max.value) {
-        max.icon = IssueListItem.iconMap[reaction]
-        max.value = issue[reaction]
+    const reaction = {value: 0}
+    for (const key of Object.keys(IssueListItem.iconMap)) {
+      if (issue[key] > reaction.value) {
+        reaction.key = key
+        reaction.value = issue[key]
+        reaction.icon = IssueListItem.iconMap[key]
       }
     }
-    return max
+    return reaction
+  }
+
+  toggleIssue(e, issue) {
+    e.preventDefault()
+    issueStore.toggle(issue)
   }
 }
 

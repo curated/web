@@ -5,7 +5,7 @@
   border-bottom: 1px solid darken($light, 7%);
   position: fixed;
   width: 100%;
-  z-index: 1;
+  z-index: 10;
 
   .container {
     display: flex;
@@ -21,7 +21,12 @@
   a {
     align-items: center;
     display: inline-flex;
-    height: 54px;
+    height: 49px;
     padding: 0 $pad;
+  }
+
+  .coming-soon {
+    opacity: 0.17;
+    pointer-events: none;
   }
 }

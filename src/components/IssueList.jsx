@@ -22,14 +22,12 @@ class IssueList extends React.Component {
     }
 
     if (issueStore.error) {
-      return (
-        <div className="issue-list-error color-red">{issueStore.error}</div>
-      )
+      return <div className="error">{issueStore.error}</div>
     }
 
     const loader = (
-      <div key={0} className="color-mid text-center text-small">
-        Loading more
+      <div key={0} className="loading-more">
+        Loading more...
       </div>
     )
 

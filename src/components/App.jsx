@@ -1,6 +1,8 @@
 import React from 'react'
 import {configure} from 'mobx'
+import {observer} from 'mobx-react'
 import {Redirect, Route, Switch} from 'react-router-dom'
+import {headerStore} from '../core/HeaderStore'
 import {Header} from './Header'
 import {Footer} from './Footer'
 import {IssueList} from './IssueList'
@@ -13,17 +15,33 @@ configure({
   isolateGlobalState: true,
 })
 
-const App = () => (
-  <div className="app">
-    <Header />
-    <main className="container">
-      <Switch>
-        <Route exact path="/" component={IssueList} />
-        <Route component={() => <Redirect to="/" />} />
-      </Switch>
-    </main>
-    <Footer />
-  </div>
-)
+@observer
+class App extends React.Component {
+  render() {
+    return (
+      <div className="app" onClick={e => this.close(e)}>
+        <div className={`overlay-fx ${headerStore.about ? 'on' : ''}`} />
+        <Header />
+        <main className="container">
+          <Switch>
+            <Route exact path="/" component={IssueList} />
+            <Route component={() => <Redirect to="/" />} />
+          </Switch>
+          <Footer />
+        </main>
+      </div>
+    )
+  }
+
+  close(e) {
+    if (e.target.closest && e.target.closest('.about')) {
+      return
+    }
+    e.preventDefault()
+    if (headerStore.about) {
+      headerStore.toggleAbout()
+    }
+  }
+}
 
 export {App}

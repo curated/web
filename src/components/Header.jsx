@@ -10,7 +10,10 @@ class Header extends React.Component {
     return (
       <header className="header">
         <div className="container">
-          <a href="/#" onClick={e => e.preventDefault()}>
+          <a
+            className="coming-soon"
+            href="/#"
+            onClick={e => e.preventDefault()}>
             <Curated />
           </a>
 
@@ -28,6 +31,7 @@ class Header extends React.Component {
 
   toggleAbout(e) {
     e.preventDefault()
+    e.stopPropagation()
     headerStore.toggleAbout()
   }
 }
