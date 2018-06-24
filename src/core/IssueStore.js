@@ -14,7 +14,7 @@ class Issue {
 class IssueStore {
   @observable loading = true
   @observable error = null
-  @observable sortField = 'createdAt'
+  @observable sortField = 'updatedAt'
   @observable issues = []
   @observable total = 0
 

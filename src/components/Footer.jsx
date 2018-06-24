@@ -2,8 +2,8 @@ import React from 'react'
 import {observer} from 'mobx-react'
 import {footerStore} from '../core/FooterStore'
 import {issueStore} from '../core/IssueStore'
-import {New} from '../assets/icons/New'
 import {Updated} from '../assets/icons/Updated'
+import {New} from '../assets/icons/New'
 import {ThumbsUp} from '../assets/emoji/ThumbsUp'
 import {ThumbsDown} from '../assets/emoji/ThumbsDown'
 import {Laugh} from '../assets/emoji/Laugh'
@@ -21,17 +21,17 @@ class Footer extends React.Component {
       <nav className={`footer ${footerStore.next ? 'next' : ''}`}>
         <div className="container">
           <a
-            className={issueStore.sortField === 'createdAt' ? 'active' : ''}
-            href="#"
-            onClick={e => this.sortBy(e, 'createdAt')}>
-            <New />
-          </a>
-
-          <a
             className={issueStore.sortField === 'updatedAt' ? 'active' : ''}
             href="#"
             onClick={e => this.sortBy(e, 'updatedAt')}>
             <Updated />
+          </a>
+
+          <a
+            className={issueStore.sortField === 'createdAt' ? 'active' : ''}
+            href="#"
+            onClick={e => this.sortBy(e, 'createdAt')}>
+            <New />
           </a>
 
           <a
