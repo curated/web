@@ -4,6 +4,7 @@ import {headerStore} from '../core/HeaderStore'
 import {Bonsai} from '../assets/logo/Bonsai'
 import {GraphQL} from '../assets/logo/GraphQL'
 import {GitHub} from '../assets/logo/GitHub'
+import {Heroku} from '../assets/logo/Heroku'
 import {Zeit} from '../assets/logo/Zeit'
 import './About.scss'
 
@@ -19,11 +20,15 @@ class About extends React.Component {
         </div>
 
         <a href="https://zeit.co" rel="noopener noreferrer" target="_blank">
-          <Zeit /> Zeit serverless
+          <Zeit /> Zeit Serverless
         </a>
 
         <a href="https://bonsai.io" rel="noopener noreferrer" target="_blank">
           <Bonsai /> Bonsai Elasticsearch
+        </a>
+
+        <a href="https://heroku.com" rel="noopener noreferrer" target="_blank">
+          <Heroku /> Heroku Dyno Worker
         </a>
 
         <a
@@ -37,7 +42,7 @@ class About extends React.Component {
           href="https://github.com/curated"
           rel="noopener noreferrer"
           target="_blank">
-          <GitHub /> Source code
+          <GitHub /> Source
         </a>
       </div>
     )
