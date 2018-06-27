@@ -1,6 +1,7 @@
 import React from 'react'
 import {headerStore} from '../core/HeaderStore'
 import {About} from './About'
+import {Search} from './Search'
 import {Curated} from '../assets/logo/Curated'
 import {Apps} from '../assets/icons/Apps'
 import './Header.scss'
@@ -10,14 +11,11 @@ class Header extends React.Component {
     return (
       <header className="header">
         <div className="container">
-          <a
-            className="coming-soon"
-            href="/#"
-            onClick={e => e.preventDefault()}>
+          <a href="/#" onClick={e => this.focusSearch(e)}>
             <Curated />
           </a>
 
-          <div className="search" />
+          <Search />
 
           <a href="/#" onClick={e => this.toggleAbout(e)}>
             <Apps />
@@ -27,6 +25,11 @@ class Header extends React.Component {
         <About />
       </header>
     )
+  }
+
+  focusSearch(e) {
+    e.preventDefault()
+    document.getElementById('search-input').focus()
   }
 
   toggleAbout(e) {

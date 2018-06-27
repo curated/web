@@ -11,22 +11,10 @@
     display: flex;
   }
 
-  .search {
-    align-items: center;
-    display: inline-flex;
-    flex-grow: 1;
-    justify-content: center;
-  }
-
   a {
     align-items: center;
     display: inline-flex;
     height: 49px;
     padding: 0 $pad;
-  }
-
-  .coming-soon {
-    opacity: 0.17;
-    pointer-events: none;
   }
 }

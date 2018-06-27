@@ -42,7 +42,6 @@ h4,
 h5,
 h6 {
   font-weight: normal;
-  margin: 0 0 10px;
 }
 
 a {
@@ -50,25 +49,6 @@ a {
   outline: none;
   text-decoration: none;
   transition: $quick;
-}
-
-input {
-  background: $light;
-  border: none;
-  border-radius: 0;
-  outline: none;
-  padding: 6px;
-  transition: $quick;
-  width: 80%;
-
-  &:focus {
-    background: white;
-  }
-
-  &:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 2.5em white inset;
-    box-shadow: 0 0 0 2.5em white inset;
-  }
 }
 
 .color-mid {

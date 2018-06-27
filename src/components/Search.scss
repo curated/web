@@ -1,0 +1,29 @@
+@import '../variables.scss';
+
+.search {
+  align-items: center;
+  display: inline-flex;
+  flex-grow: 1;
+  justify-content: center;
+
+  input {
+    background: white;
+    border-radius: 0;
+    border: none;
+    font-size: 0.8rem;
+    opacity: 0.75;
+    outline: none;
+    padding: 8px;
+    transition: $quick;
+    width: 100%;
+
+    &:focus {
+      opacity: 1;
+    }
+
+    &:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0 2.5em white inset;
+      box-shadow: 0 0 0 2.5em white inset;
+    }
+  }
+}
