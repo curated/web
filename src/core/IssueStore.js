@@ -1,5 +1,5 @@
 import {action, observable} from 'mobx'
-import {client} from './Client'
+import {elastic} from './Elastic'
 
 class Issue {
   @observable collapsed = true
@@ -8,6 +8,8 @@ class Issue {
     for (const key in issue) {
       this[key] = issue[key]
     }
+    // prettier-ignore
+    this.url = `https://github.com/${this.repoOwnerLogin}/${this.repoName}/issues/${this.number}`
   }
 }
 
@@ -36,21 +38,16 @@ class IssueStore {
     this.loading = true
     this.error = null
     try {
-      const params = {
-        sort: this.sortField,
-        asc: false,
-        from: this.issues.length,
-      }
-      const res = await client.get('/issues', params)
+      const res = await elastic.search(this.getParams())
       this.loading = false
       this.error = null
+      this.total = res.total
       this.issues = this.issues.concat(
         res.issues.map(issue => new Issue(issue))
       )
-      this.total = res.total
-    } catch (e) {
+    } catch (_) {
       this.loading = false
-      this.error = e.toString()
+      this.error = 'Service unavailable'
       this.issues = []
       this.total = 0
     }
@@ -63,6 +60,13 @@ class IssueStore {
 
   hasMore() {
     return this.total > this.issues.length
+  }
+
+  getParams() {
+    return {
+      sort: `${this.sortField}:desc`,
+      from: this.issues.length,
+    }
   }
 }
 

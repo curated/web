@@ -37,8 +37,8 @@ class IssueList extends React.Component {
         hasMore={issueStore.hasMore()}
         loader={loader}
         threshold={0}>
-        {issueStore.issues.map(issue => (
-          <IssueListItem key={issue.id} issue={issue} />
+        {issueStore.issues.map((issue, i) => (
+          <IssueListItem key={i} issue={issue} />
         ))}
       </InfiniteScroll>
     )
