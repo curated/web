@@ -32,6 +32,17 @@
     border-top: 1px solid $light;
     padding: $pad;
     word-wrap: break-word;
+
+    img {
+      max-width: 100%;
+    }
+
+    pre {
+      background: $light;
+      overflow-x: auto;
+      padding: 5px;
+      width: 100%;
+    }
   }
 
   .issue-repo {

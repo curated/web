@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {observer} from 'mobx-react'
+import marked from 'marked'
 import {fmt} from '../core/Fmt'
 import {issueStore} from '../core/IssueStore'
 import {ThumbsUp} from '../assets/emoji/ThumbsUp'
@@ -42,9 +43,10 @@ class IssueListItem extends React.Component {
           {this.renderMeta(issue)}
           {this.renderReactions(issue)}
         </div>
-        <div className={`issue-body ${issue.collapsed ? 'hidden' : ''}`}>
-          {issue.bodyText}
-        </div>
+        <div
+          className={`issue-body ${issue.collapsed ? 'hidden' : ''}`}
+          dangerouslySetInnerHTML={{__html: marked(issue.body)}}
+        />
       </section>
     )
   }
