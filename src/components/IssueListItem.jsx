@@ -10,10 +10,14 @@ import {Laugh} from '../assets/emoji/Laugh'
 import {Hooray} from '../assets/emoji/Hooray'
 import {Confused} from '../assets/emoji/Confused'
 import {Heart} from '../assets/emoji/Heart'
-import {Open} from '../assets/issue/Open'
-import {Closed} from '../assets/issue/Closed'
-import {Fork} from '../assets/repo/Fork'
-import {Star} from '../assets/repo/Star'
+import {Open} from '../assets/github/Open'
+import {Closed} from '../assets/github/Closed'
+import {Fork} from '../assets/github/Fork'
+import {Star} from '../assets/github/Star'
+import {Owner} from '../assets/github/Owner'
+import {Repo} from '../assets/github/Repo'
+import {Language} from '../assets/github/Language'
+import {Author} from '../assets/github/Author'
 import './IssueListItem.scss'
 
 @observer
@@ -38,9 +42,9 @@ class IssueListItem extends React.Component {
             {issue.title}
           </a>
         </div>
-        <div className="color-mid text-small">
+        <div className="issue-meta">
           {this.renderRepo(issue)}
-          {this.renderMeta(issue)}
+          {this.renderIssueMeta(issue)}
           {this.renderReactions(issue)}
         </div>
         <div
@@ -53,21 +57,29 @@ class IssueListItem extends React.Component {
 
   renderRepo(issue) {
     return (
-      <div className="issue-repo">
-        <a href="/#" onClick={e => e.preventDefault()}>
-          {issue.repoOwnerLogin}
+      <div className="issue-meta-row">
+        <a className="push-right" href="/#" onClick={e => e.preventDefault()}>
+          <Owner /> {issue.repoOwnerLogin}
         </a>
-        {' / '}
-        <a href="/#" onClick={e => e.preventDefault()}>
-          {issue.repoName}
+        <a className="push-right" href="/#" onClick={e => e.preventDefault()}>
+          <Repo /> {issue.repoName}
         </a>
-        <Star /> {fmt.number(issue.repoStargazers)}
-        <Fork /> {fmt.number(issue.repoForks)}
+        <div className="issue-meta-breakpoint">
+          <span className="push-right">
+            <Language /> {issue.repoLanguage}
+          </span>
+          <span className="push-right">
+            <Star /> {fmt.number(issue.repoStargazers)}
+          </span>
+          <span className="push-right">
+            <Fork /> {fmt.number(issue.repoForks)}
+          </span>
+        </div>
       </div>
     )
   }
 
-  renderMeta(issue) {
+  renderIssueMeta(issue) {
     const format = (field, label) => (
       <span
         className={`${issueStore.sortField === field ? 'active' : ''}`}
@@ -83,14 +95,14 @@ class IssueListItem extends React.Component {
         : format('createdAt', 'opened')
 
     return (
-      <div className="issue-meta">
-        {issue.state === 'OPEN' ? <Open /> : <Closed />}
-        <a href="/#" onClick={e => e.preventDefault()}>
-          #{issue.number}
+      <div className="issue-meta-row">
+        <a href={issue.url} rel="noopener noreferrer" target="_blank">
+          {issue.state === 'OPEN' ? <Open /> : <Closed />}
+          {` #${issue.number}`}
         </a>
         {' by '}
         <a href="/#" onClick={e => e.preventDefault()}>
-          {issue.authorLogin}
+          <Author /> {issue.authorLogin}
         </a>
         {time}
       </div>

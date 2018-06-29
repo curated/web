@@ -55,33 +55,32 @@
     }
   }
 
-  .issue-repo {
-    padding: $pad $pad 0;
+  .issue-meta {
+    color: $mid;
+    font-size: 0.8rem;
+
+    .issue-meta-breakpoint {
+      padding-top: $pad;
+    }
+
+    .issue-meta-row {
+      padding: 0 $pad $pad;
+
+      &:first-child {
+        padding-top: $pad;
+      }
+    }
+
+    .push-right {
+      margin-right: 10px;
+    }
 
     svg {
-      margin-left: 5px;
       vertical-align: sub;
-    }
-  }
 
-  .issue-meta {
-    padding: $pad;
-
-    // .active {
-    //   font-weight: bold;
-    // }
-
-    svg {
-      margin-right: 5px;
-      vertical-align: sub;
-    }
-  }
-
-  .issue-repo,
-  .issue-meta {
-    a {
-      color: $dark;
-      pointer-events: none;
+      g {
+        fill: $mid;
+      }
     }
   }
 
@@ -102,12 +101,18 @@
     }
 
     svg {
-      margin-right: 5px;
-      vertical-align: sub;
       height: 16px;
+      margin-right: 5px;
+    }
+  }
+}
 
-      g {
-        fill: $mid;
+@media only screen and (min-width: 500px) {
+  .issue-list-item {
+    .issue-meta {
+      .issue-meta-breakpoint {
+        display: inline-block;
+        padding-top: 0;
       }
     }
   }

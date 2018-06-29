@@ -1,7 +1,7 @@
 @import '../variables.scss';
 
 .about {
-  background: $light;
+  background: lighten($light, 3%);
   border: 1px solid darken($light, 7%);
   border-top: none;
   position: absolute;

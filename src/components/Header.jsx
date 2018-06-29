@@ -17,7 +17,10 @@ class Header extends React.Component {
 
           <Search />
 
-          <a href="/#" onClick={e => this.toggleAbout(e)}>
+          <a
+            className="about-toggler"
+            href="/#"
+            onClick={e => this.toggleAbout(e)}>
             <Apps />
           </a>
         </div>

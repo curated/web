@@ -5,7 +5,6 @@ import {Bonsai} from '../assets/logo/Bonsai'
 import {GraphQL} from '../assets/logo/GraphQL'
 import {GitHub} from '../assets/logo/GitHub'
 import {Heroku} from '../assets/logo/Heroku'
-import {Zeit} from '../assets/logo/Zeit'
 import './About.scss'
 
 @observer
@@ -18,10 +17,6 @@ class About extends React.Component {
           user reactions. It&#39;s written in Golang and React and it&#39;s
           available thanks to open source hosting by:
         </div>
-
-        <a href="https://zeit.co" rel="noopener noreferrer" target="_blank">
-          <Zeit /> Zeit Serverless
-        </a>
 
         <a href="https://bonsai.io" rel="noopener noreferrer" target="_blank">
           <Bonsai /> Bonsai Elasticsearch

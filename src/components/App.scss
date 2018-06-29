@@ -19,7 +19,7 @@ body,
     z-index: 10;
 
     &.on {
-      opacity: 0.5;
+      opacity: 0.75;
       visibility: visible;
     }
   }
@@ -51,28 +51,8 @@ a {
   transition: $quick;
 }
 
-.color-mid {
-  color: $mid !important;
-}
-
-.color-red {
-  color: $red !important;
-}
-
 .hidden {
   display: none !important;
-}
-
-.text-center {
-  text-align: center !important;
-}
-
-.text-right {
-  text-align: right !important;
-}
-
-.text-small {
-  font-size: 0.8rem !important;
 }
 
 @media only screen and (min-width: 1025px) {
