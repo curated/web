@@ -16,18 +16,24 @@ class Issue {
 class IssueStore {
   @observable loading = true
   @observable error = null
+
+  @observable match = null
   @observable sortField = 'updatedAt'
   @observable issues = []
   @observable total = 0
 
+  static sortOrder = 'desc'
+  static serviceUnavailableError = 'Service unavailable'
+
   @action
   async sortBy(sortField) {
     this.sortField = sortField
-    await this.search()
+    await this.search(this.match)
   }
 
   @action
-  async search() {
+  async search(match) {
+    this.match = match
     this.issues = []
     this.total = 0
     await this.load()
@@ -43,11 +49,11 @@ class IssueStore {
       this.error = null
       this.total = res.total
       this.issues = this.issues.concat(
-        res.issues.map(issue => new Issue(issue))
+        res.issues.map(issue => new Issue(issue)),
       )
     } catch (_) {
       this.loading = false
-      this.error = 'Service unavailable'
+      this.error = IssueStore.serviceUnavailableError
       this.issues = []
       this.total = 0
     }
@@ -64,7 +70,8 @@ class IssueStore {
 
   getParams() {
     return {
-      sort: `${this.sortField}:desc`,
+      match: this.match,
+      sort: `${this.sortField}:${IssueStore.sortOrder}`,
       from: this.issues.length,
     }
   }

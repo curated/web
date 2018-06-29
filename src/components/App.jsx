@@ -3,6 +3,7 @@ import {configure} from 'mobx'
 import {observer} from 'mobx-react'
 import {Redirect, Route, Switch} from 'react-router-dom'
 import {headerStore} from '../core/HeaderStore'
+import {autocompleteStore} from '../core/AutocompleteStore'
 import {Header} from './Header'
 import {Footer} from './Footer'
 import {IssueList} from './IssueList'
@@ -19,8 +20,8 @@ configure({
 class App extends React.Component {
   render() {
     return (
-      <div className="app" onClick={e => this.close(e)}>
-        <div className={`overlay-fx ${headerStore.info ? 'on' : ''}`} />
+      <div className="app" onClick={e => this.closeDialogs(e)}>
+        <div className={`overlay-fx ${this.showFx() ? 'on' : ''}`} />
         <Header />
         <main className="container">
           <Switch>
@@ -33,13 +34,32 @@ class App extends React.Component {
     )
   }
 
-  close(e) {
-    if (e.target.closest && e.target.closest('.info')) {
-      return
-    }
-    e.preventDefault()
-    if (headerStore.info) {
+  showFx() {
+    return headerStore.info || autocompleteStore.hasSuggestions()
+  }
+
+  closeDialogs(e) {
+    this.closeInfo(e)
+    this.closeAutocomplete(e)
+  }
+
+  closeInfo(e) {
+    if (
+      headerStore.info &&
+      !e.target.closest('.info') &&
+      !e.target.closest('.info-toggler')
+    ) {
       headerStore.toggleInfo()
+    }
+  }
+
+  closeAutocomplete(e) {
+    if (
+      autocompleteStore.hasSuggestions() &&
+      !e.target.closest('.search') &&
+      !e.target.closest('.search-toggler')
+    ) {
+      autocompleteStore.closeAutocomplete()
     }
   }
 }

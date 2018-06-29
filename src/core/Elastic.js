@@ -14,13 +14,20 @@ class Elastic {
 
   static autocompleteSize = 3
   static autocompletePath = [
-    'suggest.owners.options._source.repoOwnerLogin',
-    'suggest.repos.options._source.repoName',
-    'suggest.languages.options._source.repoLanguage',
-    'suggest.authors.options._source.authorLogin',
+    'suggest.owners.options.text',
+    'suggest.repos.options.text',
+    'suggest.languages.options.text',
+    'suggest.authors.options.text',
   ]
 
   search(params) {
+    const body = {}
+    if (params.match) {
+      body.query = {
+        match: params.match,
+      }
+    }
+    console.log(params)
     return Elastic.client
       .search({
         index: Elastic.issueIndex,
@@ -29,11 +36,12 @@ class Elastic {
         size: Elastic.searchSize,
         sort: params.sort,
         from: params.from,
+        body,
       })
       .then(res => {
         return {
           total: res.hits.total,
-          issues: res.hits.hits.map(hit => {
+          issues: (res.hits.hits || []).map(hit => {
             return hit._source
           }),
         }
@@ -56,18 +64,18 @@ class Elastic {
         },
       })
       .then(res => {
-        return {
-          owners: this.suggestions(res, 'owners', 'repoOwnerLogin'),
-          repos: this.suggestions(res, 'repos', 'repoName'),
-          languages: this.suggestions(res, 'languages', 'repoLanguage'),
-          authors: this.suggestions(res, 'authors', 'authorLogin'),
-        }
+        return Array.prototype.concat(
+          this.suggestions(res, 'owners', 'repoOwnerLogin'),
+          this.suggestions(res, 'repos', 'repoName'),
+          this.suggestions(res, 'languages', 'repoLanguage'),
+          this.suggestions(res, 'authors', 'authorLogin'),
+        )
       })
   }
 
   suggest(text, field) {
     return {
-      text,
+      text: text.trim(),
       completion: {
         field,
         skip_duplicates: true,
@@ -76,11 +84,13 @@ class Elastic {
     }
   }
 
-  suggestions(res, key, field) {
-    if (!res.suggest || !res.suggest[key]) {
+  suggestions(res, collection, field) {
+    if (!res.suggest || !res.suggest[collection]) {
       return []
     }
-    return res.suggest[key][0].options.map(o => o._source[field])
+    return res.suggest[collection][0].options.map(option => {
+      return {field, value: option.text}
+    })
   }
 }
 

@@ -11,7 +11,10 @@ class Header extends React.Component {
     return (
       <header className="header">
         <div className="container">
-          <a href="/#" onClick={e => this.focusSearch(e)}>
+          <a
+            className="search-toggler"
+            href="/#"
+            onClick={e => this.focusSearch(e)}>
             <Curated />
           </a>
 
@@ -37,7 +40,6 @@ class Header extends React.Component {
 
   toggleInfo(e) {
     e.preventDefault()
-    e.stopPropagation()
     headerStore.toggleInfo()
   }
 }
