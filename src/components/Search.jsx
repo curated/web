@@ -49,32 +49,32 @@ class Search extends React.Component {
   }
 
   renderAutocomplete() {
-    if (!autocompleteStore.hasSuggestions()) {
+    if (!autocompleteStore.hasItems()) {
       return null
     }
 
     return (
       <ul className="autocomplete">
-        {autocompleteStore.suggestions.map((suggestion, i) => (
+        {autocompleteStore.items.map((item, i) => (
           <li
             key={i}
-            className={suggestion.highlighted ? 'highlight' : ''}
-            onMouseOver={() => this.onSuggestionMouseOver(suggestion)}
-            onClick={() => this.onSuggestionClick(suggestion)}>
-            {Search.iconMap[suggestion.field]}
-            {suggestion.value}
+            className={item.highlighted ? 'highlight' : ''}
+            onMouseOver={() => this.onItemMouseOver(item)}
+            onClick={() => this.onItemClick(item)}>
+            {Search.iconMap[item.field]}
+            {item.value} <span className="item-count">({item.count})</span>
           </li>
         ))}
       </ul>
     )
   }
 
-  onSuggestionMouseOver(suggestion) {
-    autocompleteStore.replaceHighlight(suggestion)
+  onItemMouseOver(item) {
+    autocompleteStore.replaceHighlight(item)
   }
 
-  onSuggestionClick(suggestion) {
-    this.search(suggestion)
+  onItemClick(item) {
+    this.search(item)
   }
 
   onSearchKey(e) {
@@ -91,8 +91,8 @@ class Search extends React.Component {
     }
 
     if (e.keyCode === Search.enterKey) {
-      const suggestion = autocompleteStore.getHighlighted()
-      this.search(suggestion)
+      const item = autocompleteStore.getHighlighted()
+      this.search(item)
     }
   }
 

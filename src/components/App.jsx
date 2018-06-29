@@ -35,7 +35,7 @@ class App extends React.Component {
   }
 
   showFx() {
-    return headerStore.info || autocompleteStore.hasSuggestions()
+    return headerStore.info || autocompleteStore.hasItems()
   }
 
   closeDialogs(e) {
@@ -55,7 +55,7 @@ class App extends React.Component {
 
   closeAutocomplete(e) {
     if (
-      autocompleteStore.hasSuggestions() &&
+      autocompleteStore.hasItems() &&
       !e.target.closest('.search') &&
       !e.target.closest('.search-toggler')
     ) {

@@ -1,55 +1,59 @@
 import {action, observable} from 'mobx'
 import {elastic} from './Elastic'
 
-class Suggestion {
+class Item {
   @observable highlighted = false
 
-  constructor(suggestion) {
-    for (const key in suggestion) {
-      this[key] = suggestion[key]
-    }
+  constructor(item) {
+    this.field = item.field
+    this.value = item.value
+    this.count = item.count
   }
 }
 
 class AutocompleteStore {
-  @observable suggestText = ''
-  @observable suggestions = []
+  closed = false
+
+  @observable term = ''
+  @observable items = []
 
   @action
-  async autocomplete(text) {
-    if (this.suggestText === text) {
+  async autocomplete(term) {
+    if (this.term === term) {
       return
     }
     try {
-      const res = await elastic.autocomplete(text)
-      this.suggestText = text
-      this.suggestions = res.map(suggestion => new Suggestion(suggestion))
+      this.closed = false
+      const res = await elastic.autocomplete(term)
+      if (!closed) {
+        this.term = term
+        this.items = res.map(item => new Item(item))
+      }
     } catch (_) {
-      this.suggestText = ''
-      this.suggestions = []
+      this.term = ''
+      this.items = []
     }
   }
 
   @action
   closeAutocomplete() {
-    this.suggestText = ''
-    this.suggestions = []
+    this.term = ''
+    this.items = []
+    this.closed = true
   }
 
   @action
   highlight(delta) {
-    if (!this.hasSuggestions()) {
+    if (!this.hasItems()) {
       return
     }
+    const all = this.items.slice()
     const current = this.getHighlighted()
-    if (!current) {
-      this.initHighlight(delta)
-      return
-    }
-    const all = this.suggestions.slice()
     const next = all[all.indexOf(current) + delta]
-    current.highlighted = false
-    if (!next) {
+    if (current) {
+      current.highlighted = false
+    }
+    if (!current || !next) {
       this.initHighlight(delta)
       return
     }
@@ -57,29 +61,29 @@ class AutocompleteStore {
   }
 
   @action
-  replaceHighlight(suggestion) {
+  replaceHighlight(item) {
     const current = this.getHighlighted()
     if (current) {
       current.highlighted = false
     }
-    suggestion.highlighted = true
+    item.highlighted = true
   }
 
   initHighlight(delta) {
-    const i = delta === 1 ? 0 : this.suggestions.length - 1
-    this.suggestions[i].highlighted = true
+    const i = delta === 1 ? 0 : this.items.length - 1
+    this.items[i].highlighted = true
   }
 
   getHighlighted() {
-    for (const suggestion of this.suggestions) {
-      if (suggestion.highlighted) {
-        return suggestion
+    for (const item of this.items) {
+      if (item.highlighted) {
+        return item
       }
     }
   }
 
-  hasSuggestions() {
-    return this.suggestions.length > 0
+  hasItems() {
+    return this.items.length > 0
   }
 }
 

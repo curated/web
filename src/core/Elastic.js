@@ -6,19 +6,26 @@ const host = atob(
 
 class Elastic {
   static client = new Elasticsearch.Client({host})
-  static issueIndex = 'issue'
-  static issueType = 'issue'
 
-  static searchSize = 10
-  static searchPath = ['hits.total', 'hits.hits._source']
+  static issue = {
+    index: 'issue_dev',
+    type: 'issue',
+  }
 
-  static autocompleteSize = 3
-  static autocompletePath = [
-    'suggest.owners.options.text',
-    'suggest.repos.options.text',
-    'suggest.languages.options.text',
-    'suggest.authors.options.text',
-  ]
+  static search = {
+    size: 10,
+    filterPath: ['hits.total', 'hits.hits._source', 'hits.hits.highlight'],
+  }
+
+  static autocomplete = {
+    size: 3,
+    filterPath: [
+      'aggregations.repoOwnerLogin.buckets',
+      'aggregations.repoName.buckets',
+      'aggregations.repoLanguage.buckets',
+      'aggregations.authorLogin.buckets',
+    ],
+  }
 
   search(params) {
     const body = {}
@@ -26,14 +33,20 @@ class Elastic {
       body.query = {
         match: params.match,
       }
+      for (const key in params.match) {
+        body.highlight = {
+          fields: {
+            [key]: {},
+          },
+        }
+      }
     }
-    console.log(params)
     return Elastic.client
       .search({
-        index: Elastic.issueIndex,
-        type: Elastic.issueType,
-        filterPath: Elastic.searchPath,
-        size: Elastic.searchSize,
+        index: Elastic.issue.index,
+        type: Elastic.issue.type,
+        filterPath: Elastic.search.filterPath,
+        size: Elastic.search.size,
         sort: params.sort,
         from: params.from,
         body,
@@ -42,55 +55,68 @@ class Elastic {
         return {
           total: res.hits.total,
           issues: (res.hits.hits || []).map(hit => {
-            return hit._source
+            return Object.assign(hit._source, hit.highlight)
           }),
         }
       })
   }
 
-  autocomplete(text) {
+  autocomplete(t) {
+    const term = this.horrify(t)
+    if (term.length === 0) {
+      return new Promise(res => res([]))
+    }
     return Elastic.client
       .search({
-        index: Elastic.issueIndex,
-        type: Elastic.issueType,
-        filterPath: Elastic.autocompletePath,
+        index: Elastic.issue.index,
+        type: Elastic.issue.type,
+        filterPath: Elastic.autocomplete.filterPath,
         body: {
-          suggest: {
-            owners: this.suggest(text, 'repoOwnerLogin'),
-            repos: this.suggest(text, 'repoName'),
-            languages: this.suggest(text, 'repoLanguage'),
-            authors: this.suggest(text, 'authorLogin'),
+          aggs: {
+            repoOwnerLogin: this.aggregate(term, 'repoOwnerLogin'),
+            repoName: this.aggregate(term, 'repoName'),
+            repoLanguage: this.aggregate(term, 'repoLanguage'),
+            authorLogin: this.aggregate(term, 'authorLogin'),
           },
         },
       })
       .then(res => {
         return Array.prototype.concat(
-          this.suggestions(res, 'owners', 'repoOwnerLogin'),
-          this.suggestions(res, 'repos', 'repoName'),
-          this.suggestions(res, 'languages', 'repoLanguage'),
-          this.suggestions(res, 'authors', 'authorLogin'),
+          this.aggregations(res, 'repoOwnerLogin'),
+          this.aggregations(res, 'repoName'),
+          this.aggregations(res, 'repoLanguage'),
+          this.aggregations(res, 'authorLogin'),
         )
       })
   }
 
-  suggest(text, field) {
+  aggregate(horrified, field) {
     return {
-      text: text.trim(),
-      completion: {
+      terms: {
         field,
-        skip_duplicates: true,
-        size: Elastic.autocompleteSize,
+        include: `.*${horrified}.*`,
+        size: Elastic.autocomplete.size,
       },
     }
   }
 
-  suggestions(res, collection, field) {
-    if (!res.suggest || !res.suggest[collection]) {
-      return []
-    }
-    return res.suggest[collection][0].options.map(option => {
-      return {field, value: option.text}
+  aggregations(res, field) {
+    return res.aggregations[field].buckets.map(bucket => {
+      return {field, value: bucket.key, count: bucket.doc_count}
     })
+  }
+
+  horrify(term) {
+    let pattern = ''
+    for (const char of term.trim()) {
+      if (char.match(/[A-Za-z]/)) {
+        pattern += `[${char.toUpperCase()}${char.toLowerCase()}]`
+      }
+      if (char.match(/[\d-_]/)) {
+        pattern += char
+      }
+    }
+    return pattern
   }
 }
 

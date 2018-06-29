@@ -71,16 +71,8 @@
       }
     }
 
-    .push-right {
+    .m-right {
       margin-right: 10px;
-    }
-
-    svg {
-      vertical-align: sub;
-
-      g {
-        fill: $mid;
-      }
     }
   }
 
@@ -99,10 +91,20 @@
       //   font-weight: bold;
       // }
     }
+  }
 
-    svg {
-      height: 16px;
-      margin-right: 5px;
+  em {
+    background: lightcyan;
+    font-style: normal;
+  }
+
+  svg {
+    height: 16px;
+    margin-right: 5px;
+    vertical-align: sub;
+
+    g {
+      fill: $mid;
     }
   }
 }

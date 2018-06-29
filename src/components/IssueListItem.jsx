@@ -38,13 +38,15 @@ class IssueListItem extends React.Component {
       <section
         className={`issue-list-item ${issue.collapsed ? '' : 'expanded'}`}>
         <div className="issue-title">
-          <a href="/#" onClick={e => this.toggleIssue(e, issue)}>
-            {issue.title}
-          </a>
+          <a
+            href="/#"
+            onClick={e => this.toggleIssue(e, issue)}
+            dangerouslySetInnerHTML={{__html: issue.title}}
+          />
         </div>
         <div className="issue-meta">
           {this.renderRepo(issue)}
-          {this.renderIssueMeta(issue)}
+          {this.renderMeta(issue)}
           {this.renderReactions(issue)}
         </div>
         <div
@@ -58,28 +60,33 @@ class IssueListItem extends React.Component {
   renderRepo(issue) {
     return (
       <div className="issue-meta-row">
-        <a className="push-right" href="/#" onClick={e => e.preventDefault()}>
-          <Owner /> {issue.repoOwnerLogin}
+        <a className="m-right" href="/#" onClick={e => e.preventDefault()}>
+          <Owner />
+          <span dangerouslySetInnerHTML={{__html: issue.repoOwnerLogin}} />
         </a>
-        <a className="push-right" href="/#" onClick={e => e.preventDefault()}>
-          <Repo /> {issue.repoName}
+        <a className="m-right" href="/#" onClick={e => e.preventDefault()}>
+          <Repo />
+          <span dangerouslySetInnerHTML={{__html: issue.repoName}} />
         </a>
         <div className="issue-meta-breakpoint">
-          <span className="push-right">
-            <Language /> {issue.repoLanguage}
+          <span className="m-right">
+            <Language />
+            <span dangerouslySetInnerHTML={{__html: issue.repoLanguage}} />
           </span>
-          <span className="push-right">
-            <Star /> {fmt.number(issue.repoStargazers)}
+          <span className="m-right">
+            <Star />
+            {fmt.number(issue.repoStargazers)}
           </span>
-          <span className="push-right">
-            <Fork /> {fmt.number(issue.repoForks)}
+          <span className="m-right">
+            <Fork />
+            {fmt.number(issue.repoForks)}
           </span>
         </div>
       </div>
     )
   }
 
-  renderIssueMeta(issue) {
+  renderMeta(issue) {
     const format = (field, label) => (
       <span
         className={`${issueStore.sortField === field ? 'active' : ''}`}
@@ -98,11 +105,12 @@ class IssueListItem extends React.Component {
       <div className="issue-meta-row">
         <a href={issue.url} rel="noopener noreferrer" target="_blank">
           {issue.state === 'OPEN' ? <Open /> : <Closed />}
-          {` #${issue.number}`}
+          #{issue.number}
         </a>
         {' by '}
         <a href="/#" onClick={e => e.preventDefault()}>
-          <Author /> {issue.authorLogin}
+          <Author />
+          <span dangerouslySetInnerHTML={{__html: issue.authorLogin}} />
         </a>
         {time}
       </div>

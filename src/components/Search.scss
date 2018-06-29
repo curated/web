@@ -39,7 +39,7 @@
 
     li {
       border-bottom: 1px solid darken($light, 1%);
-      padding: 10px 20px;
+      padding: $pad 20px;
 
       &:hover {
         cursor: pointer;
@@ -47,6 +47,10 @@
 
       &.highlight {
         background: darken($light, 1%);
+      }
+
+      .item-count {
+        color: $mid;
       }
 
       svg {
