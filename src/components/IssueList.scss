@@ -13,11 +13,14 @@
 
     .reset-search {
       color: $dark;
+      font-size: 20px;
       position: absolute;
       right: $pad;
+      top: 6px;
     }
 
     svg {
+      margin-left: 2px;
       vertical-align: sub;
 
       g {

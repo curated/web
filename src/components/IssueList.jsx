@@ -82,7 +82,7 @@ class Summary extends React.Component {
           className="reset-search"
           href="/#"
           onClick={e => this.resetSearch(e)}>
-          &#9587;
+          &#10005;
         </a>
       </div>
     )

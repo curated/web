@@ -75,8 +75,8 @@ class IssueRepo extends React.Component {
         </a>
         <div className="issue-repo-breakpoint">
           <RepoLanguage language={this.props.issue.repoLanguage} />
-          <RepoMeta val={this.props.issue.repoStargazers} icon={<Star />} />
-          <RepoMeta val={this.props.issue.repoForks} icon={<Fork />} />
+          <RepoMeta count={this.props.issue.repoStargazers} icon={<Star />} />
+          <RepoMeta count={this.props.issue.repoForks} icon={<Fork />} />
         </div>
       </div>
     )
@@ -106,7 +106,7 @@ class IssueMeta extends React.Component {
       <div className="issue-meta">
         <span className="m-right">
           {this.props.issue.state === 'OPEN' ? <Open /> : <Closed />}
-          {this.props.issue.number}
+          #{this.props.issue.number}
         </span>
         <ByAuthor login={this.props.issue.authorLogin} />
         <Timestamp issue={this.props.issue} />
@@ -158,17 +158,17 @@ RepoLanguage.propTypes = {
  */
 class RepoMeta extends React.Component {
   render() {
-    return this.props.val === '?' ? null : (
+    return this.props.count === '?' ? null : (
       <span className="m-right">
         {this.props.icon}
-        {this.props.val}
+        {fmt.number(this.props.count)}
       </span>
     )
   }
 }
 
 RepoMeta.propTypes = {
-  val: PropTypes.any.isRequired,
+  count: PropTypes.any.isRequired,
   icon: PropTypes.object.isRequired,
 }
 
