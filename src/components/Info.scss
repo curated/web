@@ -2,11 +2,11 @@
 
 .info {
   background: lighten($light, 3%);
-  border: 1px solid darken($light, 7%);
+  border: 1px solid darken($light, 10%);
   border-top: none;
   position: absolute;
   transition: $quick;
-  top: 50px;
+  top: 55px;
   right: 0;
   width: 250px;
 
@@ -16,34 +16,24 @@
   }
 
   .description {
-    color: $mid;
     font-size: 0.8rem;
     padding: 20px 15px;
-
-    p {
-      margin: 0 0 15px;
-    }
-
-    svg {
-      height: 16px;
-      margin: 0 5px;
-      vertical-align: sub;
-
-      g {
-        fill: $mid;
-      }
-    }
   }
 
-  a {
-    border-top: 1px solid darken($light, 7%);
+  .info-anchor {
+    border-top: 1px solid darken($light, 3%);
     color: $dark;
     display: block;
     font-size: 0.8rem;
+    padding: 15px;
     width: 100%;
 
     svg {
       margin-right: 10px;
+
+      g {
+        fill: $dark;
+      }
     }
   }
 }

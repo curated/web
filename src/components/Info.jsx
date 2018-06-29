@@ -18,15 +18,24 @@ class Info extends React.Component {
           available thanks to open source hosting by:
         </div>
 
-        <a href="https://bonsai.io" rel="noopener noreferrer" target="_blank">
+        <a
+          className="info-anchor"
+          href="https://bonsai.io"
+          rel="noopener noreferrer"
+          target="_blank">
           <Bonsai /> Bonsai Elasticsearch
         </a>
 
-        <a href="https://heroku.com" rel="noopener noreferrer" target="_blank">
+        <a
+          className="info-anchor"
+          href="https://heroku.com"
+          rel="noopener noreferrer"
+          target="_blank">
           <Heroku /> Heroku Dyno Worker
         </a>
 
         <a
+          className="info-anchor"
           href="https://developer.github.com/v4"
           rel="noopener noreferrer"
           target="_blank">
@@ -34,6 +43,7 @@ class Info extends React.Component {
         </a>
 
         <a
+          className="info-anchor"
           href="https://github.com/curated"
           rel="noopener noreferrer"
           target="_blank">

@@ -14,7 +14,7 @@ class Elastic {
 
   static search = {
     size: 10,
-    filterPath: ['hits.total', 'hits.hits._source', 'hits.hits.highlight'],
+    filterPath: ['hits.total', 'hits.hits._source'],
   }
 
   static autocomplete = {
@@ -33,13 +33,6 @@ class Elastic {
       body.query = {
         match: params.match,
       }
-      for (const key in params.match) {
-        body.highlight = {
-          fields: {
-            [key]: {},
-          },
-        }
-      }
     }
     return Elastic.client
       .search({
@@ -54,9 +47,7 @@ class Elastic {
       .then(res => {
         return {
           total: res.hits.total,
-          issues: (res.hits.hits || []).map(hit => {
-            return Object.assign(hit._source, hit.highlight)
-          }),
+          issues: (res.hits.hits || []).map(hit => hit._source),
         }
       })
   }

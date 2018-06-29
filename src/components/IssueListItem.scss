@@ -1,7 +1,7 @@
 @import '../variables.scss';
 
 .issue-list-item {
-  background: white;
+  background: rgba(255, 255, 255, 0.75);
   margin-bottom: $pad;
 
   &:last-child {
@@ -33,6 +33,10 @@
     padding: $pad;
     word-wrap: break-word;
 
+    &.collapsed {
+      display: none;
+    }
+
     img {
       max-width: 100%;
     }
@@ -55,20 +59,33 @@
     }
   }
 
-  .issue-meta {
-    color: $mid;
+  .issue-details {
+    color: $dark;
     font-size: 0.8rem;
 
-    .issue-meta-breakpoint {
-      padding-top: $pad;
-    }
-
-    .issue-meta-row {
+    .issue-repo,
+    .issue-meta {
       padding: 0 $pad $pad;
 
       &:first-child {
         padding-top: $pad;
       }
+    }
+
+    .issue-url {
+      margin-top: 10px;
+
+      &.collapsed {
+        display: none;
+      }
+
+      a {
+        color: $mid;
+      }
+    }
+
+    .issue-repo-breakpoint {
+      padding-top: $pad;
     }
 
     .m-right {
@@ -86,21 +103,12 @@
       display: flex;
       flex-grow: 1;
       justify-content: left;
-
-      // &.active {
-      //   font-weight: bold;
-      // }
     }
-  }
-
-  em {
-    background: lightcyan;
-    font-style: normal;
   }
 
   svg {
     height: 16px;
-    margin-right: 5px;
+    margin-right: 3px;
     vertical-align: sub;
 
     g {
@@ -111,8 +119,8 @@
 
 @media only screen and (min-width: 500px) {
   .issue-list-item {
-    .issue-meta {
-      .issue-meta-breakpoint {
+    .issue-repo {
+      .issue-repo-breakpoint {
         display: inline-block;
         padding-top: 0;
       }

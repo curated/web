@@ -1,9 +1,14 @@
 import React from 'react'
 import InfiniteScroll from 'react-infinite-scroller'
 import {observer} from 'mobx-react'
+import {fmt} from '../core/Fmt'
 import {Loading} from '../assets/Loading'
 import {IssueListItem} from './IssueListItem'
 import {issueStore} from '../core/IssueStore'
+import {Owner} from '../assets/github/Owner'
+import {Repo} from '../assets/github/Repo'
+import {Language} from '../assets/github/Language'
+import {Author} from '../assets/github/Author'
 import './IssueList.scss'
 
 @observer
@@ -22,7 +27,11 @@ class IssueList extends React.Component {
     }
 
     if (issueStore.error) {
-      return <div className="error">{issueStore.error}</div>
+      return <div className="summary error">{issueStore.error}</div>
+    }
+
+    if (issueStore.total === 0) {
+      return <div className="summary">None found</div>
     }
 
     const loader = (
@@ -32,16 +41,56 @@ class IssueList extends React.Component {
     )
 
     return (
-      <InfiniteScroll
-        loadMore={() => issueStore.load()}
-        hasMore={issueStore.hasMore()}
-        loader={loader}
-        threshold={0}>
-        {issueStore.issues.map((issue, i) => (
-          <IssueListItem key={i} issue={issue} />
-        ))}
-      </InfiniteScroll>
+      <div>
+        <Summary />
+        <InfiniteScroll
+          loadMore={() => issueStore.load()}
+          hasMore={issueStore.hasMore()}
+          loader={loader}
+          threshold={0}>
+          {issueStore.issues.map((issue, i) => (
+            <IssueListItem key={i} issue={issue} />
+          ))}
+        </InfiniteScroll>
+      </div>
     )
+  }
+}
+
+class Summary extends React.Component {
+  static matchMap = {
+    title: ['matching', null],
+    repoOwnerLogin: ['in', <Owner key={0} />],
+    repoName: ['in', <Repo key={0} />],
+    repoLanguage: ['in', <Language key={0} />],
+    authorLogin: ['by', <Author key={0} />],
+  }
+
+  render() {
+    if (!issueStore.match) {
+      return null
+    }
+
+    const [matching, icon] = Summary.matchMap[Object.keys(issueStore.match)[0]]
+    const term = Object.values(issueStore.match)[0]
+
+    return (
+      <div className="summary">
+        {`Found ${fmt.number(issueStore.total)} issues ${matching} `}
+        {icon} {term}
+        <a
+          className="reset-search"
+          href="/#"
+          onClick={e => this.resetSearch(e)}>
+          &#9587;
+        </a>
+      </div>
+    )
+  }
+
+  resetSearch(e) {
+    e.preventDefault()
+    issueStore.search()
   }
 }
 

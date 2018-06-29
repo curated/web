@@ -1,8 +1,7 @@
 @import '../variables.scss';
 
 .footer {
-  background: darken($light, 3%);
-  border-top: 1px solid darken($light, 7%);
+  background: $dark;
   bottom: 0;
   left: 0;
   position: fixed;
@@ -26,17 +25,27 @@
     justify-content: center;
 
     &.active {
-      opacity: 0.5;
+      svg {
+        g {
+          fill: $primary;
+        }
+      }
+    }
+  }
+
+  svg {
+    g {
+      fill: $mid;
+      transition: $quick;
     }
   }
 }
 
 @media only screen and (min-width: 1025px) {
   .footer {
-    border: 1px solid darken($light, 7%);
     height: 433px;
     left: calc(50% - 467px);
-    top: 62px;
+    top: 67px;
     transition: none;
     width: 55px;
 

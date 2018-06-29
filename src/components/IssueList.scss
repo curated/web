@@ -3,9 +3,31 @@
 .issue-list {
   padding: $pad 0;
 
+  .summary {
+    background: rgba(255, 255, 255, 0.75);
+    color: $dark;
+    font-size: 0.8rem;
+    margin-bottom: $pad;
+    padding: $pad;
+    position: relative;
+
+    .reset-search {
+      color: $dark;
+      position: absolute;
+      right: $pad;
+    }
+
+    svg {
+      vertical-align: sub;
+
+      g {
+        fill: $mid;
+      }
+    }
+  }
+
   .error {
     color: $red;
-    padding: 0 $pad;
   }
 
   .loading-more {

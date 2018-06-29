@@ -1,8 +1,7 @@
 @import '../variables.scss';
 
 .header {
-  background: darken($light, 3%);
-  border-bottom: 1px solid darken($light, 7%);
+  background: $dark;
   position: fixed;
   width: 100%;
   z-index: 10;
@@ -11,10 +10,16 @@
     display: flex;
   }
 
-  a {
+  .header-anchor {
     align-items: center;
     display: inline-flex;
-    height: 49px;
+    height: 55px;
     padding: 0 $pad;
+  }
+
+  svg {
+    g {
+      fill: $mid;
+    }
   }
 }
