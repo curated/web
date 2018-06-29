@@ -1,11 +1,11 @@
 import {action, observable} from 'mobx'
 
 class HeaderStore {
-  @observable about = false
+  @observable info = false
 
   @action
-  toggleAbout() {
-    this.about = !this.about
+  toggleInfo() {
+    this.info = !this.info
   }
 }
 

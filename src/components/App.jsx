@@ -20,7 +20,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="app" onClick={e => this.close(e)}>
-        <div className={`overlay-fx ${headerStore.about ? 'on' : ''}`} />
+        <div className={`overlay-fx ${headerStore.info ? 'on' : ''}`} />
         <Header />
         <main className="container">
           <Switch>
@@ -34,12 +34,12 @@ class App extends React.Component {
   }
 
   close(e) {
-    if (e.target.closest && e.target.closest('.about')) {
+    if (e.target.closest && e.target.closest('.info')) {
       return
     }
     e.preventDefault()
-    if (headerStore.about) {
-      headerStore.toggleAbout()
+    if (headerStore.info) {
+      headerStore.toggleInfo()
     }
   }
 }

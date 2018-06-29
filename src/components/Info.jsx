@@ -5,14 +5,14 @@ import {Bonsai} from '../assets/logo/Bonsai'
 import {GraphQL} from '../assets/logo/GraphQL'
 import {GitHub} from '../assets/logo/GitHub'
 import {Heroku} from '../assets/logo/Heroku'
-import './About.scss'
+import './Info.scss'
 
 @observer
-class About extends React.Component {
+class Info extends React.Component {
   render() {
     return (
-      <div className={`about ${headerStore.about ? '' : 'collapsed'}`}>
-        <div className="info">
+      <div className={`info ${headerStore.info ? '' : 'collapsed'}`}>
+        <div className="description">
           Curated is an indexed dataset of popular GitHub comments ranked by
           user reactions. It&#39;s written in Golang and React and it&#39;s
           available thanks to open source hosting by:
@@ -44,4 +44,4 @@ class About extends React.Component {
   }
 }
 
-export {About}
+export {Info}

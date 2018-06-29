@@ -1,6 +1,6 @@
 @import '../variables.scss';
 
-.about {
+.info {
   background: lighten($light, 3%);
   border: 1px solid darken($light, 7%);
   border-top: none;
@@ -15,7 +15,7 @@
     visibility: hidden;
   }
 
-  .info {
+  .description {
     color: $mid;
     font-size: 0.8rem;
     padding: 20px 15px;
@@ -49,7 +49,7 @@
 }
 
 @media only screen and (min-width: 1025px) {
-  .about {
+  .info {
     right: calc(50% - 400px);
   }
 }

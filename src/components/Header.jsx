@@ -1,6 +1,6 @@
 import React from 'react'
 import {headerStore} from '../core/HeaderStore'
-import {About} from './About'
+import {Info} from './Info'
 import {Search} from './Search'
 import {Curated} from '../assets/logo/Curated'
 import {Apps} from '../assets/icons/Apps'
@@ -18,14 +18,14 @@ class Header extends React.Component {
           <Search />
 
           <a
-            className="about-toggler"
+            className="info-toggler"
             href="/#"
-            onClick={e => this.toggleAbout(e)}>
+            onClick={e => this.toggleInfo(e)}>
             <Apps />
           </a>
         </div>
 
-        <About />
+        <Info />
       </header>
     )
   }
@@ -35,10 +35,10 @@ class Header extends React.Component {
     document.getElementById('search-input').focus()
   }
 
-  toggleAbout(e) {
+  toggleInfo(e) {
     e.preventDefault()
     e.stopPropagation()
-    headerStore.toggleAbout()
+    headerStore.toggleInfo()
   }
 }
 
