@@ -7,11 +7,9 @@ const Prev = () => (
     version="1.1"
     role="img"
     height="24px">
-    <path
-      fill="#3f4e56"
-      d="M11.67 3.87L9.9 2.1 0 12l9.9 9.9 1.77-1.77L3.54 12z"
-    />
-    <path fill="none" d="M0 0h24v24H0z" />
+    <g fill="#3f4e56">
+      <path d="M11.67 3.87L9.9 2.1 0 12l9.9 9.9 1.77-1.77L3.54 12z" />
+    </g>
   </svg>
 )
 
