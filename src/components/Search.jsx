@@ -12,7 +12,7 @@ import './Search.scss'
 
 @observer
 class Search extends React.Component {
-  static debounceInterval = 100
+  static debounceInterval = 1
   static tabKey = 9
   static downKey = 40
   static upKey = 38
