@@ -8,7 +8,7 @@ class Elastic {
   static client = new Elasticsearch.Client({host})
 
   static issue = {
-    index: 'issue_dev',
+    index: 'issue',
     type: 'issue',
   }
 
