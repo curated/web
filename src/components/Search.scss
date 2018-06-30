@@ -25,38 +25,38 @@
       box-shadow: 0 0 0 2.5em white inset;
     }
   }
+}
 
-  .autocomplete {
-    background: lighten($light, 3%);
-    border-left: 1px solid darken($light, 10%);
-    border-right: 1px solid darken($light, 10%);
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    position: absolute;
-    top: 55px;
-    width: 100%;
+.autocomplete {
+  background: lighten($light, 3%);
+  border-left: 1px solid darken($light, 10%);
+  border-right: 1px solid darken($light, 10%);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 55px;
+  width: 100%;
 
-    li {
-      border-bottom: 1px solid darken($light, 3%);
-      padding: $pad 20px;
+  li {
+    border-bottom: 1px solid darken($light, 3%);
+    padding: 10px 20px;
 
-      &:hover {
-        cursor: pointer;
-      }
+    &:hover {
+      cursor: pointer;
+    }
 
-      &.highlight {
-        background: darken($light, 3%);
-      }
+    &.highlight {
+      background: darken($light, 3%);
+    }
 
-      .item-count {
-        color: $mid;
-      }
+    .item-count {
+      color: $mid;
+    }
 
-      svg {
-        fill: $dark;
-        margin-right: 5px;
-      }
+    svg {
+      fill: $dark;
+      margin-right: 5px;
     }
   }
 }

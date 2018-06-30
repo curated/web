@@ -56,7 +56,7 @@ class IssueList extends React.Component {
 class Summary extends React.Component {
   //prettier-ignore
   static parseMap = {
-    title: term => <span>matching <em>{`${term}`}</em></span>,
+    title: term => <span>matching <em>{`"${term}"`}</em></span>,
     repoOwnerLogin: term => <span>in <Owner /> {term}</span>,
     repoName: term => <span>in <Repo /> {term}</span>,
     repoLanguage: term => <span>in <Language /> {term}</span>,

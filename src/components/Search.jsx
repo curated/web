@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import {observer} from 'mobx-react'
 import {debounce} from 'throttle-debounce'
 import {Owner} from '../assets/github/Owner'
@@ -17,13 +18,6 @@ class Search extends React.Component {
   static upKey = 38
   static enterKey = 13
 
-  static iconMap = {
-    repoOwnerLogin: <Owner />,
-    repoName: <Repo />,
-    repoLanguage: <Language />,
-    authorLogin: <Author />,
-  }
-
   componentDidMount() {
     this.debouncedAutocomplete = debounce(Search.debounceInterval, () =>
       this.autocomplete(),
@@ -40,38 +34,19 @@ class Search extends React.Component {
           onFocus={() => this.autocomplete()}
           onChange={e => this.onInputChange(e)}
         />
-        {this.renderAutocomplete()}
+        <Autocomplete search={() => this.search()} />
       </div>
     )
   }
 
-  renderAutocomplete() {
-    if (!autocompleteStore.hasItems()) {
-      return null
-    }
-
-    return (
-      <ul className="autocomplete">
-        {autocompleteStore.items.map((item, i) => (
-          <li
-            key={i}
-            className={item.highlighted ? 'highlight' : ''}
-            onMouseOver={() => this.onItemMouseOver(item)}
-            onClick={() => this.onItemClick()}>
-            {Search.iconMap[item.field]}
-            {item.value} <span className="item-count">({item.count})</span>
-          </li>
-        ))}
-      </ul>
-    )
+  autocomplete() {
+    autocompleteStore.autocomplete()
   }
 
-  onItemMouseOver(item) {
-    autocompleteStore.replaceHighlight(item)
-  }
-
-  onItemClick() {
-    this.search(autocompleteStore.getMatch())
+  search() {
+    const match = autocompleteStore.getMatch()
+    autocompleteStore.resetAutocomplete()
+    issueStore.search(match)
   }
 
   onInputChange(e) {
@@ -93,18 +68,58 @@ class Search extends React.Component {
     }
 
     if (e.keyCode === Search.enterKey) {
-      this.search(autocompleteStore.getMatch())
+      this.search()
     }
-  }
-
-  search(match) {
-    autocompleteStore.resetAutocomplete()
-    issueStore.search(match)
-  }
-
-  autocomplete() {
-    autocompleteStore.autocomplete()
   }
 }
 
+/**
+ * Autocomplete
+ */
+@observer
+class Autocomplete extends React.Component {
+  static iconMap = {
+    repoOwnerLogin: <Owner />,
+    repoName: <Repo />,
+    repoLanguage: <Language />,
+    authorLogin: <Author />,
+  }
+
+  render() {
+    if (!autocompleteStore.hasItems()) {
+      return null
+    }
+
+    return (
+      <ul className="autocomplete">
+        {autocompleteStore.items.map((item, i) => (
+          <li
+            key={i}
+            className={item.highlighted ? 'highlight' : ''}
+            onMouseOver={() => this.onItemMouseOver(item)}
+            onClick={() => this.onItemClick()}>
+            {Autocomplete.iconMap[item.field]}
+            {item.value} <span className="item-count">({item.count})</span>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+
+  onItemMouseOver(item) {
+    autocompleteStore.replaceHighlight(item)
+  }
+
+  onItemClick() {
+    this.props.search()
+  }
+}
+
+Autocomplete.propTypes = {
+  search: PropTypes.func.isRequired,
+}
+
+/**
+ * Export
+ */
 export {Search}
