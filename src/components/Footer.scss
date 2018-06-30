@@ -26,18 +26,14 @@
 
     &.active {
       svg {
-        g {
-          fill: $primary;
-        }
+        fill: $primary;
       }
     }
   }
 
   svg {
-    g {
-      fill: $mid;
-      transition: $quick;
-    }
+    fill: $mid;
+    transition: $quick;
   }
 }
 

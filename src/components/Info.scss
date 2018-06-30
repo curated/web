@@ -29,11 +29,8 @@
     width: 100%;
 
     svg {
+      fill: $dark;
       margin-right: 10px;
-
-      g {
-        fill: $dark;
-      }
     }
   }
 }

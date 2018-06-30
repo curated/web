@@ -107,13 +107,10 @@
   }
 
   svg {
+    fill: $mid;
     height: 16px;
     margin-right: 3px;
     vertical-align: sub;
-
-    g {
-      fill: $mid;
-    }
   }
 }
 

@@ -20,12 +20,9 @@
     }
 
     svg {
+      fill: $mid;
       margin-left: 2px;
       vertical-align: sub;
-
-      g {
-        fill: $mid;
-      }
     }
   }
 

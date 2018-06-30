@@ -7,9 +7,7 @@ const Next = () => (
     version="1.1"
     role="img"
     height="24px">
-    <g fill="#3f4e56">
-      <path d="M5.88 4.12L13.76 12l-7.88 7.88L8 22l10-10L8 2z" />
-    </g>
+    <path d="M5.88 4.12L13.76 12l-7.88 7.88L8 22l10-10L8 2z" />
   </svg>
 )
 

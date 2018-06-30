@@ -8,9 +8,7 @@ const Zeit = () => (
     role="img"
     width="24px"
     height="24px">
-    <g fill="#3f4e56" preserveAspectRatio="none">
-      <polygon points="508 312 734 712 282 712" />
-    </g>
+    <polygon preserveAspectRatio="none" points="508 312 734 712 282 712" />
   </svg>
 )
 
