@@ -30,10 +30,6 @@ class IssueList extends React.Component {
       return <div className="summary error">{issueStore.error}</div>
     }
 
-    if (issueStore.total === 0) {
-      return <div className="summary">None found</div>
-    }
-
     const loader = (
       <div key={0} className="loading-more">
         Loading more...
@@ -58,12 +54,13 @@ class IssueList extends React.Component {
 }
 
 class Summary extends React.Component {
-  static matchMap = {
-    title: ['matching', null],
-    repoOwnerLogin: ['in', <Owner key={0} />],
-    repoName: ['in', <Repo key={0} />],
-    repoLanguage: ['in', <Language key={0} />],
-    authorLogin: ['by', <Author key={0} />],
+  //prettier-ignore
+  static parseMap = {
+    title: term => <span>matching <em>{`${term}`}</em></span>,
+    repoOwnerLogin: term => <span>in <Owner /> {term}</span>,
+    repoName: term => <span>in <Repo /> {term}</span>,
+    repoLanguage: term => <span>in <Language /> {term}</span>,
+    authorLogin: term => <span>in <Author /> {term}</span>
   }
 
   render() {
@@ -71,17 +68,16 @@ class Summary extends React.Component {
       return null
     }
 
-    const [matching, icon] = Summary.matchMap[Object.keys(issueStore.match)[0]]
-    const term = Object.values(issueStore.match)[0]
+    const parse = Summary.parseMap[Object.keys(issueStore.match)[0]]
+    const matchingDescription = parse(Object.values(issueStore.match)[0])
 
     return (
       <div className="summary">
-        {`Found ${fmt.number(issueStore.total)} issues ${matching} `}
-        {icon} {term}
+        {`Found ${fmt.number(issueStore.total)} issues`} {matchingDescription}
         <a
           className="reset-search"
-          href="/#"
-          onClick={e => this.resetSearch(e)}>
+          onClick={e => this.resetSearch(e)}
+          href="/#">
           &#10005;
         </a>
       </div>

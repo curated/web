@@ -55,7 +55,7 @@ class App extends React.Component {
 
   closeAutocomplete(e) {
     if (autocompleteStore.hasItems() && !e.target.closest('.search')) {
-      autocompleteStore.closeAutocomplete()
+      autocompleteStore.removeItems()
     }
   }
 }

@@ -11,7 +11,7 @@ import './Search.scss'
 
 @observer
 class Search extends React.Component {
-  static debounceInterval = 300
+  static debounceInterval = 100
   static tabKey = 9
   static downKey = 40
   static upKey = 38
@@ -24,24 +24,21 @@ class Search extends React.Component {
     authorLogin: <Author />,
   }
 
-  constructor() {
-    super()
-    this.searchInputRef = React.createRef()
-  }
-
   componentDidMount() {
-    this.onSearchInput = debounce(Search.debounceInterval, this.autocomplete)
+    this.debouncedAutocomplete = debounce(Search.debounceInterval, () =>
+      this.autocomplete(),
+    )
   }
 
   render() {
     return (
-      <div className="search" onKeyDown={e => this.onSearchKey(e)}>
+      <div className="search" onKeyUp={e => this.onSearchKeyUp(e)}>
         <input
           id="search-input"
           placeholder="Search..."
-          onFocus={e => this.onSearchInput(e.target.value)}
-          onKeyUp={e => this.onSearchInput(e.target.value)}
-          ref={this.searchInputRef}
+          value={autocompleteStore.term}
+          onFocus={() => this.autocomplete()}
+          onChange={e => this.onInputChange(e)}
         />
         {this.renderAutocomplete()}
       </div>
@@ -60,7 +57,7 @@ class Search extends React.Component {
             key={i}
             className={item.highlighted ? 'highlight' : ''}
             onMouseOver={() => this.onItemMouseOver(item)}
-            onClick={() => this.onItemClick(item)}>
+            onClick={() => this.onItemClick()}>
             {Search.iconMap[item.field]}
             {item.value} <span className="item-count">({item.count})</span>
           </li>
@@ -73,12 +70,17 @@ class Search extends React.Component {
     autocompleteStore.replaceHighlight(item)
   }
 
-  onItemClick(item) {
-    this.search(item)
+  onItemClick() {
+    this.search(autocompleteStore.getMatch())
   }
 
-  onSearchKey(e) {
-    if (e.keyCode === Search.tabKey) {
+  onInputChange(e) {
+    autocompleteStore.updateTerm(e.target.value)
+    this.debouncedAutocomplete()
+  }
+
+  onSearchKeyUp(e) {
+    if (e.keyCode === Search.tabKey && autocompleteStore.hasItems()) {
       e.preventDefault()
     }
 
@@ -91,22 +93,17 @@ class Search extends React.Component {
     }
 
     if (e.keyCode === Search.enterKey) {
-      const item = autocompleteStore.getHighlighted()
-      this.search(item)
+      this.search(autocompleteStore.getMatch())
     }
   }
 
-  search(s) {
-    const input = this.searchInputRef.current
-    const titleMatch = input.value.trim() ? {title: input.value} : null
-    const match = s ? {[s.field]: s.value} : titleMatch
-    input.value = ''
-    autocompleteStore.closeAutocomplete()
+  search(match) {
+    autocompleteStore.resetAutocomplete()
     issueStore.search(match)
   }
 
-  async autocomplete(text) {
-    autocompleteStore.autocomplete(text)
+  autocomplete() {
+    autocompleteStore.autocomplete()
   }
 }
 

@@ -12,21 +12,18 @@ class Item {
 }
 
 class AutocompleteStore {
-  closed = false
-
   @observable term = ''
   @observable items = []
 
   @action
-  async autocomplete(term) {
-    if (this.term === term) {
+  async autocomplete() {
+    if (!this.term) {
+      this.items = []
       return
     }
     try {
-      this.closed = false
-      const res = await elastic.autocomplete(term)
-      if (!closed) {
-        this.term = term
+      const res = await elastic.autocomplete(this.term)
+      if (this.term) {
         this.items = res.map(item => new Item(item))
       }
     } catch (_) {
@@ -36,10 +33,19 @@ class AutocompleteStore {
   }
 
   @action
-  closeAutocomplete() {
+  updateTerm(term) {
+    this.term = term
+  }
+
+  @action
+  removeItems() {
+    this.items = []
+  }
+
+  @action
+  resetAutocomplete() {
     this.term = ''
     this.items = []
-    this.closed = true
   }
 
   @action
@@ -80,6 +86,15 @@ class AutocompleteStore {
         return item
       }
     }
+  }
+
+  getMatch() {
+    const item = autocompleteStore.getHighlighted()
+    if (item) {
+      return {[item.field]: item.value}
+    }
+    const term = autocompleteStore.term.trim()
+    return term ? {title: term} : null
   }
 
   hasItems() {
