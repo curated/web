@@ -60,7 +60,7 @@ class Summary extends React.Component {
     repoOwnerLogin: term => <span>in <Owner /> {term}</span>,
     repoName: term => <span>in <Repo /> {term}</span>,
     repoLanguage: term => <span>in <Language /> {term}</span>,
-    authorLogin: term => <span>in <Author /> {term}</span>
+    authorLogin: term => <span>by <Author /> {term}</span>
   }
 
   render() {
