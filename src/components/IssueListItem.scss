@@ -73,7 +73,7 @@
     }
 
     .issue-url {
-      margin-top: 10px;
+      margin-top: $pad;
 
       &.collapsed {
         display: none;
@@ -89,7 +89,7 @@
     }
 
     .m-right {
-      margin-right: 10px;
+      margin-right: 8px;
     }
   }
 
