@@ -21,7 +21,7 @@
     align-items: center;
     display: inline-flex;
     flex-grow: 1;
-    height: 54px;
+    height: 55px;
     justify-content: center;
 
     &.active {
@@ -39,9 +39,9 @@
 
 @media only screen and (min-width: 1025px) {
   .footer {
-    height: 433px;
-    left: calc(50% - 467px);
-    top: 67px;
+    height: 442px;
+    left: calc(50% - 470px);
+    top: 70px;
     transition: none;
     width: 55px;
 
