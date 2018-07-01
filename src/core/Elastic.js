@@ -18,7 +18,7 @@ class Elastic {
   }
 
   static autocomplete = {
-    size: 3,
+    size: 10,
     filterPath: [
       'aggregations.repoOwnerLogin.buckets',
       'aggregations.repoName.buckets',
@@ -72,12 +72,14 @@ class Elastic {
         },
       })
       .then(res => {
-        return Array.prototype.concat(
-          this.aggregations(res, 'repoOwnerLogin'),
-          this.aggregations(res, 'repoName'),
-          this.aggregations(res, 'repoLanguage'),
-          this.aggregations(res, 'authorLogin'),
-        )
+        return this.sort(
+          Array.prototype.concat(
+            this.aggregations(res, 'repoOwnerLogin'),
+            this.aggregations(res, 'repoName'),
+            this.aggregations(res, 'repoLanguage'),
+            this.aggregations(res, 'authorLogin'),
+          ),
+        ).slice(0, 10)
       })
   }
 
@@ -97,14 +99,30 @@ class Elastic {
     })
   }
 
+  sort(items) {
+    return items.sort((a, b) => {
+      return this.compare(a.count * -1, b.count * -1, () => {
+        return this.compare(a.value, b.value)
+      })
+    })
+  }
+
+  compare(a, b, eq) {
+    if (a === b) {
+      return eq ? eq() : 0
+    }
+    return a > b ? 1 : -1
+  }
+
   horrify(term) {
     let pattern = ''
     for (const char of term.trim()) {
       if (char.match(/[A-Za-z]/)) {
         pattern += `[${char.toUpperCase()}${char.toLowerCase()}]`
-      }
-      if (char.match(/[\d-_]/)) {
+      } else if (char.match(/[\d-_]/)) {
         pattern += char
+      } else {
+        pattern += `\\${char}`
       }
     }
     return pattern
