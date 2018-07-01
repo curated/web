@@ -67,12 +67,12 @@ class AutocompleteStore {
   }
 
   @action
-  replaceHighlight(item) {
+  replaceHighlight(next) {
     const current = this.getHighlighted()
     if (current) {
       current.highlighted = false
     }
-    item.highlighted = true
+    next.highlighted = true
   }
 
   initHighlight(delta) {
