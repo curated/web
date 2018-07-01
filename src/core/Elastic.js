@@ -20,9 +20,9 @@ class Elastic {
   static autocomplete = {
     size: 10,
     filterPath: [
+      'aggregations.repoLanguage.buckets',
       'aggregations.repoOwnerLogin.buckets',
       'aggregations.repoName.buckets',
-      'aggregations.repoLanguage.buckets',
       'aggregations.authorLogin.buckets',
     ],
   }
@@ -64,9 +64,9 @@ class Elastic {
         filterPath: Elastic.autocomplete.filterPath,
         body: {
           aggs: {
+            repoLanguage: this.aggregate(term, 'repoLanguage'),
             repoOwnerLogin: this.aggregate(term, 'repoOwnerLogin'),
             repoName: this.aggregate(term, 'repoName'),
-            repoLanguage: this.aggregate(term, 'repoLanguage'),
             authorLogin: this.aggregate(term, 'authorLogin'),
           },
         },
@@ -74,9 +74,9 @@ class Elastic {
       .then(res => {
         return this.sort(
           Array.prototype.concat(
+            this.aggregations(res, 'repoLanguage'),
             this.aggregations(res, 'repoOwnerLogin'),
             this.aggregations(res, 'repoName'),
-            this.aggregations(res, 'repoLanguage'),
             this.aggregations(res, 'authorLogin'),
           ),
         ).slice(0, 10)
