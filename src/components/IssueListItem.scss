@@ -8,15 +8,6 @@
     margin-bottom: 0;
   }
 
-  &.expanded {
-    .issue-title {
-      a {
-        background: $dark;
-        color: $light;
-      }
-    }
-  }
-
   .issue-title {
     border-bottom: 1px solid $light;
     word-wrap: break-word;
@@ -25,11 +16,15 @@
       color: $dark;
       display: block;
       padding: $pad;
+
+      &.expanded {
+        background: $dark;
+        color: $light;
+      }
     }
   }
 
-  .issue-body,
-  .issue-comment {
+  .issue-body {
     border-top: 1px solid $light;
     padding: $pad;
     word-wrap: break-word;
@@ -60,55 +55,18 @@
     }
   }
 
-  .issue-comment {
-    .issue-comment-title {
-      font-size: 0.8rem;
-      color: $mid;
-    }
-
-    .issue-comment-body {
-      padding: $pad 0;
-    }
-
-    .issue-reactions {
-      border: none;
-      font-size: 0.8rem;
-      padding: 0;
-    }
+  .issue-repo {
+    font-size: 0.8rem;
+    padding: $pad $pad 0;
   }
 
-  .issue-details {
-    color: $dark;
+  .issue-repo-breakpoint {
+    padding-top: $pad;
+  }
+
+  .issue-meta {
     font-size: 0.8rem;
-
-    .issue-repo,
-    .issue-meta {
-      padding: 0 $pad $pad;
-
-      &:first-child {
-        padding-top: $pad;
-      }
-    }
-
-    .issue-url {
-      margin-top: $pad;
-
-      &.collapsed {
-        display: none;
-      }
-
-      a {
-        color: $mid;
-      }
-    }
-
-    .issue-repo-breakpoint {
-      padding-top: $pad;
-    }
-
-    .m-right {
-      margin-right: 8px;
-    }
+    padding: $pad;
   }
 
   .issue-reactions {
@@ -122,6 +80,10 @@
       margin-right: $pad;
       justify-content: left;
     }
+  }
+
+  .m-right {
+    margin-right: 8px;
   }
 
   svg {

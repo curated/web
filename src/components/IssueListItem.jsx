@@ -20,61 +20,108 @@ import {Language} from '../assets/github/Language'
 import {Author} from '../assets/github/Author'
 import './IssueListItem.scss'
 
-@observer
 class IssueListItem extends React.Component {
   render() {
     return (
-      <section
-        className={`issue-list-item ${
-          this.props.issue.collapsed ? '' : 'expanded'
-        }`}>
-        <div className="issue-title">
-          <a href="/#" onClick={e => this.toggleIssue(e, this.props.issue)}>
-            {this.props.issue.title}
-          </a>
-        </div>
-        <div className="issue-details">
-          <IssueRepo issue={this.props.issue} />
-          <IssueMeta issue={this.props.issue} />
-          <IssueReactions issue={this.props.issue} />
-        </div>
-        <div
-          className={`issue-body ${
-            this.props.issue.collapsed ? 'collapsed' : ''
-          }`}
-          dangerouslySetInnerHTML={{__html: marked(this.props.issue.body)}}
-        />
-        <div className="issue-comment">
-          <div className="issue-comment-title">
-            <Author /> wcamarao commented on Jun 6 2018
-          </div>
-          <div
-            className="issue-comment-body"
-            dangerouslySetInnerHTML={{__html: marked(this.props.issue.body)}}
-          />
-          <IssueReactions issue={this.props.issue} />
-        </div>
-        <div className="issue-comment">
-          <div className="issue-comment-title">
-            <Author /> wcamarao commented on Jun 6 2018
-          </div>
-          <div
-            className="issue-comment-body"
-            dangerouslySetInnerHTML={{__html: marked(this.props.issue.body)}}
-          />
-          <IssueReactions issue={this.props.issue} />
-        </div>
+      <section className="issue-list-item">
+        <IssueTitle issue={this.props.issue} />
+        <IssueRepo issue={this.props.issue} />
+        <IssueMeta issue={this.props.issue} />
+        <IssueReactions issue={this.props.issue} />
+        <IssueBody issue={this.props.issue} />
       </section>
     )
   }
 
-  toggleIssue(e, issue) {
-    e.preventDefault()
-    issueStore.toggle(issue)
+  tmp() {
+    return (
+      <section>
+        <div className="issue-comment">
+          <div className="issue-comment-title">
+            <Author /> wcamarao commented on Jun 6 2018
+          </div>
+          <div
+            className="issue-comment-body"
+            dangerouslySetInnerHTML={{__html: marked(this.props.issue.body)}}
+          />
+          <IssueReactions issue={this.props.issue} />
+        </div>
+        <div className="issue-comment">
+          <div className="issue-comment-title">
+            <Author /> wcamarao commented on Jun 6 2018
+          </div>
+          <div
+            className="issue-comment-body"
+            dangerouslySetInnerHTML={{__html: marked(this.props.issue.body)}}
+          />
+          <IssueReactions issue={this.props.issue} />
+        </div>
+        <div
+          className={`issue-url ${
+            this.props.issue.collapsed ? 'collapsed' : ''
+          }`}>
+          <a
+            href={this.props.issue.url}
+            rel="noopener noreferrer"
+            target="_blank">
+            {this.props.issue.url.substr(8)}
+          </a>
+        </div>
+      </section>
+    )
   }
 }
 
 IssueListItem.propTypes = {
+  issue: PropTypes.object.isRequired,
+}
+
+/**
+ * IssueTitle
+ */
+@observer
+class IssueTitle extends React.Component {
+  render() {
+    return (
+      <div className="issue-title">
+        <a
+          className={this.props.issue.collapsed ? '' : 'expanded'}
+          onClick={e => this.toggle(e)}
+          href="/#">
+          {this.props.issue.title}
+        </a>
+      </div>
+    )
+  }
+
+  toggle(e) {
+    e.preventDefault()
+    issueStore.toggle(this.props.issue)
+  }
+}
+
+IssueTitle.propTypes = {
+  issue: PropTypes.object.isRequired,
+}
+
+/**
+ * IssueBody
+ */
+@observer
+class IssueBody extends React.Component {
+  render() {
+    return (
+      <div
+        className={`issue-body ${
+          this.props.issue.collapsed ? 'collapsed' : ''
+        }`}
+        dangerouslySetInnerHTML={{__html: marked(this.props.issue.body)}}
+      />
+    )
+  }
+}
+
+IssueBody.propTypes = {
   issue: PropTypes.object.isRequired,
 }
 
@@ -129,18 +176,7 @@ class IssueMeta extends React.Component {
           #{this.props.issue.number}
         </span>
         <ByAuthor login={this.props.issue.authorLogin} />
-        <Timestamp issue={this.props.issue} />
-        <div
-          className={`issue-url ${
-            this.props.issue.collapsed ? 'collapsed' : ''
-          }`}>
-          <a
-            href={this.props.issue.url}
-            rel="noopener noreferrer"
-            target="_blank">
-            {this.props.issue.url.substr(8)}
-          </a>
-        </div>
+        <IssueTimestamp issue={this.props.issue} />
       </div>
     )
   }
@@ -219,9 +255,9 @@ ByAuthor.propTypes = {
 }
 
 /**
- * Timestamp
+ * IssueTimestamp
  */
-class Timestamp extends React.Component {
+class IssueTimestamp extends React.Component {
   render() {
     return issueStore.sortField === 'updatedAt'
       ? this.format('updatedAt', 'updated')
@@ -237,13 +273,14 @@ class Timestamp extends React.Component {
   }
 }
 
-Timestamp.propTypes = {
+IssueTimestamp.propTypes = {
   issue: PropTypes.object.isRequired,
 }
 
 /**
  * IssueReactions
  */
+@observer
 class IssueReactions extends React.Component {
   static iconMap = {
     thumbsUp: <ThumbsUp />,
