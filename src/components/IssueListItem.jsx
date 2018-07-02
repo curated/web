@@ -264,12 +264,15 @@ class IssueReactions extends React.Component {
   renderElements(reactions) {
     return (
       <div className="issue-reactions">
-        {reactions.map(reaction => (
-          <div key={reaction.key} className="issue-reaction">
-            {reaction.icon}
-            {fmt.number(reaction.value)}
-          </div>
-        ))}
+        {reactions.map(
+          reaction =>
+            reaction.value === 0 ? null : (
+              <div key={reaction.key} className="issue-reaction">
+                {reaction.icon}
+                {fmt.number(reaction.value)}
+              </div>
+            ),
+        )}
       </div>
     )
   }
