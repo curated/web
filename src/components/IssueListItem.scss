@@ -28,7 +28,8 @@
     }
   }
 
-  .issue-body {
+  .issue-body,
+  .issue-comment {
     border-top: 1px solid $light;
     padding: $pad;
     word-wrap: break-word;
@@ -56,6 +57,23 @@
       &:last-child {
         margin-bottom: 0;
       }
+    }
+  }
+
+  .issue-comment {
+    .issue-comment-title {
+      font-size: 0.8rem;
+      color: $mid;
+    }
+
+    .issue-comment-body {
+      padding: $pad 0;
+    }
+
+    .issue-reactions {
+      border: none;
+      font-size: 0.8rem;
+      padding: 0;
     }
   }
 

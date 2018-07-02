@@ -44,6 +44,26 @@ class IssueListItem extends React.Component {
           }`}
           dangerouslySetInnerHTML={{__html: marked(this.props.issue.body)}}
         />
+        <div className="issue-comment">
+          <div className="issue-comment-title">
+            <Author /> wcamarao commented on Jun 6 2018
+          </div>
+          <div
+            className="issue-comment-body"
+            dangerouslySetInnerHTML={{__html: marked(this.props.issue.body)}}
+          />
+          <IssueReactions issue={this.props.issue} />
+        </div>
+        <div className="issue-comment">
+          <div className="issue-comment-title">
+            <Author /> wcamarao commented on Jun 6 2018
+          </div>
+          <div
+            className="issue-comment-body"
+            dangerouslySetInnerHTML={{__html: marked(this.props.issue.body)}}
+          />
+          <IssueReactions issue={this.props.issue} />
+        </div>
       </section>
     )
   }
