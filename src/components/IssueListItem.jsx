@@ -29,6 +29,7 @@ class IssueListItem extends React.Component {
         <IssueMeta issue={this.props.issue} />
         <IssueReactions issue={this.props.issue} />
         <IssueBody issue={this.props.issue} />
+        <IssueComments issue={this.props.issue} />
       </section>
     )
   }
@@ -36,26 +37,6 @@ class IssueListItem extends React.Component {
   tmp() {
     return (
       <section>
-        <div className="issue-comment">
-          <div className="issue-comment-title">
-            <Author /> wcamarao commented on Jun 6 2018
-          </div>
-          <div
-            className="issue-comment-body"
-            dangerouslySetInnerHTML={{__html: marked(this.props.issue.body)}}
-          />
-          <IssueReactions issue={this.props.issue} />
-        </div>
-        <div className="issue-comment">
-          <div className="issue-comment-title">
-            <Author /> wcamarao commented on Jun 6 2018
-          </div>
-          <div
-            className="issue-comment-body"
-            dangerouslySetInnerHTML={{__html: marked(this.props.issue.body)}}
-          />
-          <IssueReactions issue={this.props.issue} />
-        </div>
         <div
           className={`issue-url ${
             this.props.issue.collapsed ? 'collapsed' : ''
@@ -175,7 +156,7 @@ class IssueMeta extends React.Component {
           {this.props.issue.state === 'OPEN' ? <Open /> : <Closed />}
           #{this.props.issue.number}
         </span>
-        <ByAuthor login={this.props.issue.authorLogin} />
+        <IssueAuthor login={this.props.issue.authorLogin} />
         <IssueTimestamp issue={this.props.issue} />
       </div>
     )
@@ -229,9 +210,9 @@ RepoMeta.propTypes = {
 }
 
 /**
- * ByAuthor
+ * IssueAuthor
  */
-class ByAuthor extends React.Component {
+class IssueAuthor extends React.Component {
   render() {
     return this.props.login === '?' ? null : (
       <span className="m-right">
@@ -250,7 +231,7 @@ class ByAuthor extends React.Component {
   }
 }
 
-ByAuthor.propTypes = {
+IssueAuthor.propTypes = {
   login: PropTypes.string.isRequired,
 }
 
@@ -350,6 +331,53 @@ class IssueReactions extends React.Component {
 }
 
 IssueReactions.propTypes = {
+  issue: PropTypes.object.isRequired,
+}
+
+/**
+ * IssueComments
+ */
+@observer
+class IssueComments extends React.Component {
+  render() {
+    return (
+      <div
+        className={`issue-comments ${
+          this.props.issue.collapsed ? 'collapsed' : ''
+        }`}>
+        <IssueComment issue={this.props.issue} />
+        <IssueComment issue={this.props.issue} />
+      </div>
+    )
+  }
+}
+
+IssueComments.propTypes = {
+  issue: PropTypes.object.isRequired,
+}
+
+/**
+ * IssueComment
+ */
+@observer
+class IssueComment extends React.Component {
+  render() {
+    return (
+      <div className="issue-comment">
+        <div className="issue-comment-title">
+          <Author /> wcamarao commented on Jun 6 2018
+        </div>
+        <div
+          className="issue-comment-body"
+          dangerouslySetInnerHTML={{__html: marked(this.props.issue.body)}}
+        />
+        <IssueReactions issue={this.props.issue} />
+      </div>
+    )
+  }
+}
+
+IssueComment.propTypes = {
   issue: PropTypes.object.isRequired,
 }
 

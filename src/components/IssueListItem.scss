@@ -24,14 +24,32 @@
     }
   }
 
-  .issue-body {
-    border-top: 1px solid $light;
-    padding: $pad;
-    word-wrap: break-word;
+  .issue-repo {
+    font-size: 0.8rem;
+    padding: $pad $pad 0;
+  }
 
+  .issue-repo-breakpoint {
+    padding-top: $pad;
+  }
+
+  .issue-meta {
+    font-size: 0.8rem;
+    padding: $pad;
+  }
+
+  .issue-body,
+  .issue-comments {
     &.collapsed {
       display: none;
     }
+  }
+
+  .issue-body,
+  .issue-comments .issue-comment {
+    border-top: 1px solid $light;
+    padding: $pad;
+    word-wrap: break-word;
 
     img {
       max-width: 100%;
@@ -55,30 +73,29 @@
     }
   }
 
-  .issue-repo {
+  .issue-comment-title {
+    color: $mid;
     font-size: 0.8rem;
-    padding: $pad $pad 0;
+    padding: 0 0 $pad;
   }
 
-  .issue-repo-breakpoint {
-    padding-top: $pad;
-  }
-
-  .issue-meta {
-    font-size: 0.8rem;
-    padding: $pad;
+  .issue-comments {
+    .issue-reactions {
+      border: none;
+      padding: $pad 0 0;
+    }
   }
 
   .issue-reactions {
     border-top: 1px solid $light;
     display: flex;
+    font-size: 0.8rem;
     padding: $pad;
 
     .issue-reaction {
       align-items: center;
       display: flex;
       margin-right: $pad;
-      justify-content: left;
     }
   }
 
