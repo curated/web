@@ -2,7 +2,7 @@ import moment from 'moment'
 
 class Fmt {
   datetime(d) {
-    return moment(d).format('LLLL')
+    return moment(d).format('LLL')
   }
 
   number(s) {

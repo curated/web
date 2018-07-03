@@ -33,24 +33,6 @@ class IssueListItem extends React.Component {
       </section>
     )
   }
-
-  tmp() {
-    return (
-      <section>
-        <div
-          className={`issue-url ${
-            this.props.issue.collapsed ? 'collapsed' : ''
-          }`}>
-          <a
-            href={this.props.issue.url}
-            rel="noopener noreferrer"
-            target="_blank">
-            {this.props.issue.url.substr(8)}
-          </a>
-        </div>
-      </section>
-    )
-  }
 }
 
 IssueListItem.propTypes = {
@@ -347,10 +329,46 @@ class IssueComments extends React.Component {
         className={`issue-comments ${
           this.props.issue.collapsed ? 'collapsed' : ''
         }`}>
-        <IssueComment issue={this.props.issue} />
-        <IssueComment issue={this.props.issue} />
+        {this.props.issue.comments.map((comment, i) => (
+          <IssueComment key={i} comment={comment} />
+        ))}
+        {this.renderCommentsFooter()}
       </div>
     )
+  }
+
+  renderCommentsFooter() {
+    return (
+      <div className="issue-comments-footer">
+        {this.renderLoadComments()}
+        <a
+          className="f-right"
+          href={this.props.issue.url}
+          rel="noopener noreferrer"
+          target="_blank">
+          Open on GitHub
+        </a>
+      </div>
+    )
+  }
+
+  renderLoadComments() {
+    if (this.props.issue.commentsLoading) {
+      return <span>Loading comments...</span>
+    }
+
+    return (
+      <a onClick={e => this.loadComments(e)} href="/#">
+        {this.props.issue.comments.length === 0
+          ? 'Load comments'
+          : 'Load more comments'}
+      </a>
+    )
+  }
+
+  loadComments(e) {
+    e.preventDefault()
+    issueStore.loadComments(this.props.issue)
   }
 }
 
@@ -361,26 +379,35 @@ IssueComments.propTypes = {
 /**
  * IssueComment
  */
-@observer
 class IssueComment extends React.Component {
   render() {
     return (
       <div className="issue-comment">
         <div className="issue-comment-title">
-          <Author /> wcamarao commented on Jun 6 2018
+          <Author /> {this.props.comment.authorLogin}
+          {' commented on '}
+          {fmt.datetime(this.props.comment.createdAt)}
         </div>
         <div
           className="issue-comment-body"
-          dangerouslySetInnerHTML={{__html: marked(this.props.issue.body)}}
+          dangerouslySetInnerHTML={{__html: marked(this.props.comment.body)}}
         />
-        <IssueReactions issue={this.props.issue} />
+        {this.renderReactions()}
       </div>
     )
+  }
+
+  renderReactions() {
+    if (this.props.comment.totalReactions === 0) {
+      return null
+    }
+
+    return <IssueReactions issue={this.props.comment} />
   }
 }
 
 IssueComment.propTypes = {
-  issue: PropTypes.object.isRequired,
+  comment: PropTypes.object.isRequired,
 }
 
 /**

@@ -73,6 +73,16 @@
     }
   }
 
+  .issue-comments-footer {
+    border-top: 1px solid $light;
+    font-size: 0.8rem;
+    padding: $pad;
+
+    .f-right {
+      float: right;
+    }
+  }
+
   .issue-comment-title {
     color: $mid;
     font-size: 0.8rem;

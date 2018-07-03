@@ -1,8 +1,12 @@
 import {action, observable} from 'mobx'
 import {elastic} from './Elastic'
+import {github} from './GitHub'
 
 class Issue {
   @observable collapsed = true
+  @observable commentsLoading = false
+  @observable commentsError = null
+  @observable comments = []
 
   constructor(issue) {
     for (const key in issue) {
@@ -56,6 +60,22 @@ class IssueStore {
       this.error = IssueStore.serviceUnavailableError
       this.issues = []
       this.total = 0
+    }
+  }
+
+  @action
+  async loadComments(issue) {
+    issue.commentsLoading = true
+    issue.commentsError = null
+    try {
+      const res = await github.comments(issue)
+      issue.commentsLoading = false
+      issue.commentsError = null
+      issue.comments = issue.comments.concat(res)
+    } catch (e) {
+      issue.commentsLoading = false
+      issue.commentsError = IssueStore.serviceUnavailableError
+      issue.comments = []
     }
   }
 
