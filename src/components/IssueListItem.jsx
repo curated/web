@@ -353,16 +353,39 @@ class IssueComments extends React.Component {
   }
 
   renderLoadComments() {
-    if (this.props.issue.commentsLoading) {
-      return <span>Loading comments...</span>
+    if (
+      this.props.issue.commentsLoading ||
+      !this.props.issue.hasLoadedCommentsTotal()
+    ) {
+      return <span className="load-comments">Loading...</span>
     }
 
+    if (this.props.issue.commentsTotal === 0) {
+      return <span className="load-comments">No comments</span>
+    }
+
+    if (this.props.issue.comments.length === this.props.issue.commentsTotal) {
+      return (
+        <span className="load-comments">
+          All comments loaded ({this.props.issue.commentsTotal})
+        </span>
+      )
+    }
+
+    // prettier-ignore
+    const stats = this.props.issue.comments.length > 0
+      ? ` (${this.props.issue.comments.length}/${this.props.issue.commentsTotal})`
+      : ` (${this.props.issue.commentsTotal})`
+
     return (
-      <a onClick={e => this.loadComments(e)} href="/#">
-        {this.props.issue.comments.length === 0
-          ? 'Load comments'
-          : 'Load more comments'}
-      </a>
+      <span className="load-comments">
+        <a onClick={e => this.loadComments(e)} href="/#">
+          {this.props.issue.comments.length === 0
+            ? 'Load comments'
+            : 'Load more comments'}
+        </a>
+        {stats}
+      </span>
     )
   }
 
@@ -384,7 +407,10 @@ class IssueComment extends React.Component {
     return (
       <div className="issue-comment">
         <div className="issue-comment-title">
-          <Author /> {this.props.comment.authorLogin}
+          <a href="/#" onClick={e => this.searchByAuthor(e)}>
+            <Author />
+            {this.props.comment.authorLogin}
+          </a>
           {' commented on '}
           {fmt.datetime(this.props.comment.createdAt)}
         </div>
@@ -403,6 +429,11 @@ class IssueComment extends React.Component {
     }
 
     return <IssueReactions issue={this.props.comment} />
+  }
+
+  searchByAuthor(e) {
+    e.preventDefault()
+    issueStore.search({authorLogin: this.props.comment.authorLogin})
   }
 }
 

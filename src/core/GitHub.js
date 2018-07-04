@@ -1,28 +1,28 @@
-class Comment {
-  constructor(comment) {
-    this.authorLogin = comment.user && comment.user.login
-    this.body = comment.body
-    this.createdAt = comment.created_at
-    if (comment.reactions) {
-      this.totalReactions = comment.reactions.total
-      this.thumbsUp = comment.reactions['+1']
-      this.thumbsDown = comment.reactions['-1']
-      this.laugh = comment.reactions.laugh
-      this.hooray = comment.reactions.hooray
-      this.confused = comment.reactions.confused
-      this.heart = comment.reactions.heart
-    }
-  }
-}
+const token = atob('MzRmNmE2NzRjZjRjYmFlZDA3YzY4NDhiMmIzZmMwNWFkZGJjY2RkZA==')
 
 class GitHub {
   static commentsPerPage = 10
 
-  comments(issue) {
-    const params = this.params(issue)
+  countComments(issue) {
     // prettier-ignore
-    const endpoint = `https://api.github.com/repos/${params.repoOwnerLogin}/${params.repoName}/issues/${params.number}/comments?per_page=${GitHub.commentsPerPage}&page=${params.page}`
-    const headers = {Accept: 'application/vnd.github.squirrel-girl-preview'}
+    const endpoint = `https://api.github.com/repos/${issue.repoOwnerLogin}/${issue.repoName}/issues/${issue.number}`
+    const headers = {Authorization: `token ${token}`}
+    return new Promise((resolve, reject) => {
+      fetch(endpoint, {method: 'get', headers})
+        .then(res => (res.ok ? res.json() : reject(res.statusText)))
+        .then(res => resolve(res.comments))
+        .catch(e => reject(e))
+    })
+  }
+
+  comments(issue) {
+    const page = issue.comments.length / GitHub.commentsPerPage + 1
+    // prettier-ignore
+    const endpoint = `https://api.github.com/repos/${issue.repoOwnerLogin}/${issue.repoName}/issues/${issue.number}/comments?per_page=${GitHub.commentsPerPage}&page=${page}`
+    const headers = {
+      Authorization: `token ${token}`,
+      Accept: 'application/vnd.github.squirrel-girl-preview',
+    }
     return new Promise((resolve, reject) => {
       fetch(endpoint, {method: 'get', headers})
         .then(res => (res.ok ? res.json() : reject(res.statusText)))
@@ -32,16 +32,20 @@ class GitHub {
   }
 
   parse(comments) {
-    return comments.map(comment => new Comment(comment))
-  }
-
-  params(issue) {
-    return {
-      repoOwnerLogin: issue.repoOwnerLogin,
-      repoName: issue.repoName,
-      number: issue.number,
-      page: issue.comments.length / GitHub.commentsPerPage + 1,
-    }
+    return comments.map(comment => {
+      return {
+        authorLogin: comment.user.login,
+        body: comment.body,
+        createdAt: comment.created_at,
+        totalReactions: comment.reactions.total_count,
+        thumbsUp: comment.reactions['+1'],
+        thumbsDown: comment.reactions['-1'],
+        laugh: comment.reactions.laugh,
+        hooray: comment.reactions.hooray,
+        confused: comment.reactions.confused,
+        heart: comment.reactions.heart,
+      }
+    })
   }
 }
 

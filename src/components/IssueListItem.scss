@@ -75,11 +75,12 @@
 
   .issue-comments-footer {
     border-top: 1px solid $light;
+    display: flex;
     font-size: 0.8rem;
     padding: $pad;
 
-    .f-right {
-      float: right;
+    .load-comments {
+      flex-grow: 1;
     }
   }
 
