@@ -278,15 +278,13 @@ class IssueReactions extends React.Component {
   }
 
   getAllReactions(issue) {
-    return Object.keys(IssueReactions.iconMap)
-      .map(key => {
-        return {
-          key,
-          value: issue[key],
-          icon: IssueReactions.iconMap[key],
-        }
-      })
-      .sort((a, b) => (a.value >= b.value ? -1 : 1))
+    return Object.keys(IssueReactions.iconMap).map(key => {
+      return {
+        key,
+        value: issue[key],
+        icon: IssueReactions.iconMap[key],
+      }
+    })
   }
 
   getRelevantReaction(issue) {
