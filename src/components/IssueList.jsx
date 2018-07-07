@@ -57,10 +57,10 @@ class Summary extends React.Component {
   //prettier-ignore
   static parseMap = {
     title: term => <span>matching <em>{`"${term}"`}</em></span>,
-    repoOwnerLogin: term => <span>in <Owner /> {term}</span>,
-    repoName: term => <span>in <Repo /> {term}</span>,
-    repoLanguage: term => <span>in <Language /> {term}</span>,
-    authorLogin: term => <span>by <Author /> {term}</span>
+    repoOwnerLogin: owner => <span>in <Owner /> {owner}</span>,
+    repoName: repo => <span>in <Repo /> {repo}</span>,
+    repoLanguage: language => <span>in <Language /> {language}</span>,
+    authorLogin: author => <span>by <Author /> {author}</span>
   }
 
   render() {
