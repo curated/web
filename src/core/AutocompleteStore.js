@@ -1,15 +1,6 @@
 import {action, observable} from 'mobx'
 import {elastic} from './Elastic'
-
-class Item {
-  @observable highlighted = false
-
-  constructor(item) {
-    this.field = item.field
-    this.value = item.value
-    this.count = item.count
-  }
-}
+import {Item} from './AutocompleteItem'
 
 class AutocompleteStore {
   @observable term = ''
@@ -88,13 +79,21 @@ class AutocompleteStore {
     }
   }
 
-  getMatch() {
+  getSearch() {
     const item = autocompleteStore.getHighlighted()
     if (item) {
-      return {[item.field]: item.value}
+      return {
+        match: item.field,
+        q: item.value,
+      }
     }
     const term = autocompleteStore.term.trim()
-    return term ? {title: term} : null
+    if (term) {
+      return {
+        match: 'title',
+        q: term,
+      }
+    }
   }
 
   hasItems() {

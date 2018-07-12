@@ -114,12 +114,12 @@ class IssueRepo extends React.Component {
 
   searchByOwner(e) {
     e.preventDefault()
-    issueStore.search({repoOwnerLogin: this.props.issue.repoOwnerLogin})
+    issueStore.search('repoOwnerLogin', this.props.issue.repoOwnerLogin)
   }
 
   searchByRepo(e) {
     e.preventDefault()
-    issueStore.search({repoName: this.props.issue.repoName})
+    issueStore.search('repoName', this.props.issue.repoName)
   }
 }
 
@@ -164,7 +164,7 @@ class RepoLanguage extends React.Component {
 
   searchByLanguage(e) {
     e.preventDefault()
-    issueStore.search({repoLanguage: this.props.language})
+    issueStore.search('repoLanguage', this.props.language)
   }
 }
 
@@ -209,7 +209,7 @@ class IssueAuthor extends React.Component {
 
   searchByAuthor(e) {
     e.preventDefault()
-    issueStore.search({authorLogin: this.props.login})
+    issueStore.search('authorLogin', this.props.login)
   }
 }
 
@@ -431,7 +431,7 @@ class IssueComment extends React.Component {
 
   searchByAuthor(e) {
     e.preventDefault()
-    issueStore.search({authorLogin: this.props.comment.authorLogin})
+    issueStore.search('authorLogin', this.props.comment.authorLogin)
   }
 }
 

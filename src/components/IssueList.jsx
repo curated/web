@@ -1,6 +1,7 @@
 import React from 'react'
 import InfiniteScroll from 'react-infinite-scroller'
 import {observer} from 'mobx-react'
+import {history} from '../core/History'
 import {fmt} from '../core/Fmt'
 import {Loading} from '../assets/Loading'
 import {IssueListItem} from './IssueListItem'
@@ -14,7 +15,9 @@ import './IssueList.scss'
 @observer
 class IssueList extends React.Component {
   componentDidMount() {
-    issueStore.search()
+    const match = history.getQuery('match')
+    const q = history.getQuery('q')
+    issueStore.search(match, q)
   }
 
   render() {
@@ -64,12 +67,12 @@ class Summary extends React.Component {
   }
 
   render() {
-    if (!issueStore.match) {
+    if (!issueStore.match || !issueStore.q) {
       return null
     }
 
-    const parse = Summary.parseMap[Object.keys(issueStore.match)[0]]
-    const matchingDescription = parse(Object.values(issueStore.match)[0])
+    const parse = Summary.parseMap[issueStore.match]
+    const matchingDescription = parse(issueStore.q)
 
     return (
       <div className="summary">

@@ -1,44 +1,15 @@
 import {action, observable} from 'mobx'
+import {history} from './History'
 import {elastic} from './Elastic'
 import {github} from './GitHub'
-
-class Issue {
-  @observable collapsed = true
-  @observable commentsLoading = false
-  @observable commentsError = null
-  @observable commentsTotal = null
-  @observable comments = []
-
-  constructor(issue) {
-    for (const key in issue) {
-      this[key] = issue[key]
-    }
-    // prettier-ignore
-    this.url = `https://github.com/${this.repoOwnerLogin}/${this.repoName}/issues/${this.number}`
-  }
-
-  @action
-  async fetchCommentsTotal() {
-    if (this.hasLoadedCommentsTotal()) {
-      return
-    }
-    try {
-      this.commentsTotal = await github.countComments(this)
-    } catch (_) {
-      this.commentsTotal = -1
-    }
-  }
-
-  hasLoadedCommentsTotal() {
-    return typeof this.commentsTotal === 'number'
-  }
-}
+import {Issue} from './Issue'
 
 class IssueStore {
   @observable loading = true
   @observable error = null
 
   @observable match = null
+  @observable q = null
   @observable sortField = 'updatedAt'
   @observable issues = []
   @observable total = 0
@@ -46,15 +17,27 @@ class IssueStore {
   static sortOrder = 'desc'
   static serviceUnavailableError = 'Service unavailable'
 
-  @action
-  async sortBy(sortField) {
-    this.sortField = sortField
-    await this.search(this.match)
+  constructor() {
+    this.sortField = history.getQuery('sortBy') || this.sortField
+    history.setQuery('replace', {sortBy: this.sortField})
   }
 
   @action
-  async search(match) {
+  async sortBy(sortField) {
+    history.setQuery('push', {sortBy: sortField})
+    this.sortField = sortField
+    await this.search(this.match, this.q)
+  }
+
+  @action
+  async search(match, q) {
+    if (match && q) {
+      history.setQuery('push', {match, q})
+    } else {
+      history.removeQuery('push', ['match', 'q'])
+    }
     this.match = match
+    this.q = q
     this.issues = []
     this.total = 0
     await this.load()
@@ -108,8 +91,8 @@ class IssueStore {
 
   getParams() {
     return {
-      match: this.match,
-      sort: `${this.sortField}:${IssueStore.sortOrder}`,
+      match: this.match && this.q ? {[this.match]: this.q} : null,
+      sort: `${history.getQuery('sortBy')}:${IssueStore.sortOrder}`,
       from: this.issues.length,
     }
   }

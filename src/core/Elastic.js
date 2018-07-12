@@ -53,7 +53,7 @@ class Elastic {
   }
 
   autocomplete(t) {
-    const term = this.horrify(t)
+    const term = this.regex(t)
     if (term.length === 0) {
       return new Promise(res => res([]))
     }
@@ -83,11 +83,11 @@ class Elastic {
       })
   }
 
-  aggregate(horrified, field) {
+  aggregate(term, field) {
     return {
       terms: {
         field,
-        include: `.*${horrified}.*`,
+        include: `.*${term}.*`,
         size: Elastic.autocomplete.size,
       },
     }
@@ -114,7 +114,7 @@ class Elastic {
     return a > b ? 1 : -1
   }
 
-  horrify(term) {
+  regex(term) {
     let pattern = ''
     for (const char of term.trim()) {
       if (char.match(/[A-Za-z]/)) {

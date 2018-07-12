@@ -44,9 +44,9 @@ class Search extends React.Component {
   }
 
   search() {
-    const match = autocompleteStore.getMatch()
+    const search = autocompleteStore.getSearch()
     autocompleteStore.resetAutocomplete()
-    issueStore.search(match)
+    issueStore.search(search.match, search.q)
   }
 
   onInputChange(e) {
