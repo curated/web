@@ -1,11 +1,9 @@
 import Elasticsearch from 'elasticsearch-browser'
 
-const host = atob(
-  'eTBuMXpoMGpkYTpsd3U4ajZwd25jQGN1cmF0ZWQtNjQzODc2NDI0OC51cy13ZXN0LTIuYm9uc2Fpc2VhcmNoLm5ldA==',
-)
-
 class Elastic {
-  static client = new Elasticsearch.Client({host})
+  static client = new Elasticsearch.Client({
+    host: 'https://curated-6438764248.us-west-2.bonsaisearch.net',
+  })
 
   static issue = {
     index: 'issue',
