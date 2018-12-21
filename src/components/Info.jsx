@@ -19,11 +19,12 @@ class Info extends React.Component {
         </div>
 
         <a
-          className="info-anchor"
+          className="info-anchor gold-sponsor"
           href="https://bonsai.io"
           rel="noopener noreferrer"
           target="_blank">
           <Bonsai /> Bonsai Elasticsearch
+          <div className="gold-sponsor-label">GOLD SPONSOR</div>
         </a>
 
         <a
