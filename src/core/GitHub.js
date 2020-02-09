@@ -1,4 +1,4 @@
-const token = atob('MzRmNmE2NzRjZjRjYmFlZDA3YzY4NDhiMmIzZmMwNWFkZGJjY2RkZA==')
+const token = atob('MDFmYjg1ZTdkYmZmMTM2NzQzODQ4Zjg0NjkwMDAwZTJjNjU5YWYxNQ==')
 
 class GitHub {
   static commentsPerPage = 10
